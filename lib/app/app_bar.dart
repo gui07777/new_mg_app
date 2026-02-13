@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 
-class Bar extends StatelessWidget implements PreferredSizeWidget {
+class Bar extends StatelessWidget {
   const Bar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
+    return SliverAppBar(
       backgroundColor: Colors.black,
+      pinned: true,
+      floating: false,
+      elevation: 0,
+      toolbarHeight: 80,
       centerTitle: true,
-      toolbarHeight: 92,
-      leading: IconButton(
-        icon: Icon(Icons.sort, color: Colors.white),
-        onPressed: null,
-      ),
+      leading: const Icon(Icons.sort, color: Colors.white),
+      title: Image.asset('assets/icons/codetech.png', height: 45),
       actions: [
-        Column(
-          children: [
-            IconButton(icon: Icon(Icons.sms, color: Colors.white), onPressed: null),
-            Text(
-              'Suporte'
-            )
-          ],
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Icon(Icons.sms, color: Colors.white, size: 24),
+              Text(
+                'Suporte',
+                style: TextStyle(color: Colors.white, fontSize: 10),
+              ),
+            ],
+          ),
         ),
       ],
-      title: Image.asset('assets/icons/codetech.png', height: 60),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(92);
 }
