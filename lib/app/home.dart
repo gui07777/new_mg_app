@@ -37,14 +37,18 @@ class _HomeState extends State<Home> {
       backgroundColor: const Color(0xFFE0E0E0),
       body: CustomScrollView(
         slivers: [
-          const Bar(),
+          //appbar preta
+          Bar(),
 
+          //barrinha preta que aparece e desaparece conforme rolagem
           SliverToBoxAdapter(
             child: Container(
               color: Colors.black,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
                 children: [
+                  Icon(Icons.star, color: Colors.amber, size: 15.0),
+                  SizedBox(width: 3),
                   const Text(
                     'Campanhas',
                     style: TextStyle(
@@ -64,10 +68,7 @@ class _HomeState extends State<Home> {
           ),
 
           SliverToBoxAdapter(
-            child: Container(
-              height: 1,
-              color: Colors.grey[800],
-            ),
+            child: Container(height: 1, color: Colors.grey[800]),
           ),
 
           SliverToBoxAdapter(
@@ -98,6 +99,43 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
+
+          SliverToBoxAdapter(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 18),
+                  child: Row(
+                    children: [
+                      Icon(Icons.people, color: Colors.amber),
+                      SizedBox(width: 5),
+                      Text(
+                        "Perguntas frequentes",
+                        style: TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                _buildCurrentlyQuestions(
+                  "Como acesso minhas compras?",
+                  'Existem duas formas de você conseguir acessar suas compras, a primeira é logando no site, abrindo o menu do site e clicando em "Meus Títulos" e a segunda forma é visitando a campanha e clicando em "Ver meus títulos" logo a baixo das condições de participação.',
+                ),
+                _buildCurrentlyQuestions(
+                  "Como é o processo do sorteio?",
+                  'O sorteio será realizado com base na extração da Loteria Federal, conforme Condições de Participação constantes no título.',
+                ),
+                _buildCurrentlyQuestions(
+                  " Onde o prêmio será entregue?",
+                  'Não há necessidade de se preocupar com os trâmites relacionados à entrega do prêmio, pois nós cuidaremos de tudo.',
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -111,6 +149,7 @@ class _HomeState extends State<Home> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
@@ -122,9 +161,18 @@ class _HomeState extends State<Home> {
           ),
           const Padding(
             padding: EdgeInsets.all(10.0),
-            child: Text(
-              "Campanhas: Escolha sua sorte",
-              style: TextStyle(fontSize: 13, color: Colors.black87),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "CAMPANHA DANIELA TESTE",
+                  style: TextStyle(fontSize: 13, color: Colors.black87),
+                ),
+                Text(
+                  "Participe e concorra!",
+                  style: TextStyle(fontSize: 10, color: Colors.black87),
+                ),
+              ],
             ),
           ),
         ],
@@ -139,7 +187,7 @@ class _HomeState extends State<Home> {
         onTap: () {},
         borderRadius: BorderRadius.circular(15),
         child: Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(15),
@@ -158,11 +206,12 @@ class _HomeState extends State<Home> {
                 child: Image.network(
                   'https://picsum.photos/100/100',
                   width: 85,
-                  height: 85,
+                  height: 95,
                   fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(width: 12),
+              //parte que contem o texto
               Expanded(
                 child: SizedBox(
                   height: 85,
@@ -239,6 +288,18 @@ class _HomeState extends State<Home> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildCurrentlyQuestions(String title, String subtitle) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      child: ExpansionTile(
+        title: Text(title),
+        children: [ListTile(title: Text(subtitle))],
+        collapsedBackgroundColor: Colors.white,
+        backgroundColor: Colors.white
       ),
     );
   }
