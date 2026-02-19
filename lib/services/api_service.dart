@@ -1,0 +1,3 @@
+class ApiSevice {
+  static const String baseUrl = 'http://localhost:3001';
+}
