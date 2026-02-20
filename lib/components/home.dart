@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 5),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
@@ -103,6 +103,7 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
+                        const SizedBox(height: 5),
                       ],
                     ),
                   ),
@@ -136,7 +137,7 @@ class _HomeState extends State<Home> {
                     "10/12/2025 às 14:08",
                     "0,01",
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -198,7 +199,7 @@ class _HomeState extends State<Home> {
             borderRadius: BorderRadius.circular(15),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: Colors.black.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -216,7 +217,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
               const SizedBox(width: 12),
-              //parte que contem o texto
               Expanded(
                 child: SizedBox(
                   height: 85,
@@ -303,6 +303,7 @@ class _HomeState extends State<Home> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: ExpansionTile(
+        visualDensity: VisualDensity(horizontal: 0, vertical: -4),
         collapsedShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),

@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 class CarouselCampaign extends StatefulWidget {
-  CarouselCampaign({super.key});
+  const CarouselCampaign({super.key});
 
   @override
   State<CarouselCampaign> createState() => _CarouselCampaignState();
