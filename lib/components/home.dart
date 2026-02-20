@@ -83,8 +83,37 @@ class _HomeState extends State<Home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 16),
-                  // _buildMainBanner(),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      spacing: 8,
+                      children: [
+                        Icon(Icons.light_sharp, color: Colors.deepOrangeAccent),
+                        Text(
+                          'Campanhas',
+                          style: TextStyle(
+                            fontSize: 21,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          'Escolha sua sorte',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   CarouselCampaign(),
+                ],
+              ),
+            ),
+
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
                   const SizedBox(height: 12),
                   _buildListItem(
                     "A HORA DA SORTE 3",
@@ -155,45 +184,6 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
-  // Widget _buildMainBanner() {
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: 16),
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.circular(15),
-  //     ),
-  //     child: Column(
-  //       crossAxisAlignment: CrossAxisAlignment.start,
-  //       children: [
-  //         ClipRRect(
-  //           borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-  //           child: Image.network(
-  //             'https://picsum.photos/400/220',
-  //             fit: BoxFit.cover,
-  //             width: double.infinity,
-  //           ),
-  //         ),
-  //         const Padding(
-  //           padding: EdgeInsets.all(10.0),
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               Text(
-  //                 "CAMPANHA DANIELA TESTE",
-  //                 style: TextStyle(fontSize: 13, color: Colors.black87),
-  //               ),
-  //               Text(
-  //                 "Participe e concorra!",
-  //                 style: TextStyle(fontSize: 10, color: Colors.black87),
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget _buildListItem(String titulo, String data, String valor) {
     return Container(
