@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/app_bar.dart';
+import 'package:new_mg_app/components/app_bar/app_bar.dart';
 import 'dart:async';
-
 import 'package:new_mg_app/components/carousel_campaign.dart';
 
 class Home extends StatefulWidget {
@@ -86,22 +85,29 @@ class _HomeState extends State<Home> {
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
-                      spacing: 8,
                       children: [
                         Icon(Icons.light_sharp, color: Colors.deepOrangeAccent),
-                        Text(
-                          'Campanhas',
-                          style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          'Escolha sua sorte',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                          ),
+                        const SizedBox(width: 5),
+                        Row(
+                          spacing: 8,
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              'Campanhas',
+                              style: TextStyle(
+                                fontSize: 21,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              'Escolha sua sorte',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 5),
                       ],

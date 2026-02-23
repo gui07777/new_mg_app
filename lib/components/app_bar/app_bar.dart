@@ -1,7 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/navigation_modal.dart';
 
 class Bar extends StatelessWidget {
   const Bar({super.key});
+
+  void _openMenu(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return const NavigationModal();
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: Tween(begin: const Offset(0, -1), end: Offset.zero).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +31,10 @@ class Bar extends StatelessWidget {
       elevation: 0,
       toolbarHeight: 80,
       centerTitle: true,
-      leading: const Icon(Icons.sort, color: Colors.white),
+      leading: IconButton(
+        icon: const Icon(Icons.sort, color: Colors.white),
+        onPressed: () => _openMenu(context),
+      ),
       title: Image.asset('assets/icons/codetech.png', height: 45),
       actions: [
         Padding(

@@ -6,8 +6,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Home(), debugShowCheckedModeBanner: false,);
+    return MaterialApp(
+       debugShowCheckedModeBanner: false,
+       initialRoute: '/',
+       routes: {
+        '/': (context) => const Home(),        
+       }
+       );
   }
 
-  
 }
