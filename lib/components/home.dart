@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/app_bar/app_bar.dart';
+import 'package:new_mg_app/components/custom_top_bar/custom_top_bar.dart';
 import 'dart:async';
 import 'package:new_mg_app/components/carousel_campaign.dart';
 
@@ -40,43 +40,10 @@ class _HomeState extends State<Home> {
         top: false,
         child: CustomScrollView(
           slivers: [
-            //appbar preta
-            Bar(),
-
-            //barrinha preta que aparece e desaparece conforme rolagem
-            SliverToBoxAdapter(
-              child: Container(
-                color: Colors.black,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: Row(
-                  children: [
-                    Icon(Icons.star, color: Colors.amber, size: 15.0),
-                    SizedBox(width: 3),
-                    const Text(
-                      'Campanhas',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    Text(
-                      'Meus títulos',
-                      style: TextStyle(color: Colors.grey[500], fontSize: 15),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
+            CustomTopBar(),
             SliverToBoxAdapter(
               child: Container(height: 1, color: Colors.grey[800]),
             ),
-
             SliverToBoxAdapter(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +84,6 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-
             SliverToBoxAdapter(
               child: Column(
                 children: [
@@ -147,7 +113,6 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-
             SliverToBoxAdapter(
               child: Column(
                 children: [
@@ -168,7 +133,6 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-
                   Padding(padding: const EdgeInsets.symmetric(vertical: 5)),
 
                   _buildCurrentlyQuestions(
@@ -183,6 +147,7 @@ class _HomeState extends State<Home> {
                     " Onde o prêmio será entregue?",
                     'Não há necessidade de se preocupar com os trâmites relacionados à entrega do prêmio, pois nós cuidaremos de tudo.',
                   ),
+
                 ],
               ),
             ),
