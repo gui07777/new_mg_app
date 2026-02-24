@@ -76,7 +76,7 @@ class CustomTopBar extends StatelessWidget {
                       SizedBox(width: 10),
                       Icon(Icons.star, color: Colors.amberAccent, size: 15),
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(context, '/rota1'),
+                        onPressed: () => Navigator.pushNamed(context, '/'),
                         style: TextButton.styleFrom(padding: EdgeInsets.all(2)),
                         child: const Text(
                           'Campanhas',
@@ -90,7 +90,7 @@ class CustomTopBar extends StatelessWidget {
                     ],
                   ),
                   TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/rota2'),
+                    onPressed: () => Navigator.pushNamed(context, '/my-numbers'),
                     child: const Text(
                       'Meus títulos',
                       style: TextStyle(color: Color(0xFFdedede), fontSize: 15),
