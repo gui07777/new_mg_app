@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/campaign_cards.dart';
 import 'package:new_mg_app/components/custom_top_bar/custom_top_bar.dart';
 import 'dart:async';
 import 'package:new_mg_app/components/carousel_campaign.dart';
@@ -87,29 +88,44 @@ class _HomeState extends State<Home> {
             SliverToBoxAdapter(
               child: Column(
                 children: [
-                  const SizedBox(height: 12),
-                  _buildListItem(
-                    "A HORA DA SORTE 3",
-                    "15/11/2025 às 17:36",
-                    "0,01",
+                  CampaignCards(
+                    titulo: "A HORA DA SORTE 3",
+                    data: "15/11/2025 às 17:36",
+                    valor: "0,01",
                   ),
-                  _buildListItem(
-                    "CAMPANHA TESTE DANIELA",
-                    "10/12/2025 às 23:08",
-                    "0,01",
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  CampaignCards(
+                    titulo: "A HORA DA SORTE 3",
+                    data: "15/11/2025 às 17:36",
+                    valor: "0,01",
                   ),
-                  _buildListItem("HENRY", "14/03/2026 às 23:27", "0,01"),
-                  _buildListItem(
-                    "CAMPANHA DANIELA TESTE",
-                    "07/02/2026 às 14:24",
-                    "0,01",
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  CampaignCards(
+                    titulo: "A HORA DA SORTE 3",
+                    data: "15/11/2025 às 17:36",
+                    valor: "0,01",
                   ),
-                  _buildListItem(
-                    "CAMPANHA TESTE",
-                    "10/12/2025 às 14:08",
-                    "0,01",
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  CampaignCards(
+                    titulo: "A HORA DA SORTE 3",
+                    data: "15/11/2025 às 17:36",
+                    valor: "0,01",
                   ),
-                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -151,119 +167,6 @@ class _HomeState extends State<Home> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildListItem(String titulo, String data, String valor) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(15),
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  'https://picsum.photos/100/100',
-                  width: 85,
-                  height: 95,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: SizedBox(
-                  height: 85,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            titulo,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            "R\$ $valor",
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          AnimatedOpacity(
-                            opacity: _badgeOpacity,
-                            duration: const Duration(milliseconds: 1000),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 49, 136, 51),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: const Text(
-                                "Adquira já",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          const Icon(
-                            Icons.calendar_month_outlined,
-                            size: 14,
-                            color: Color.fromARGB(255, 66, 65, 65),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            data,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color.fromARGB(255, 66, 65, 65),
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
