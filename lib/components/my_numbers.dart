@@ -28,6 +28,7 @@ class MyNumbers extends StatelessWidget {
                         fontSize: 21,
                         color: Color(0xFF212b36),
                         fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const Spacer(),
                     ElevatedButton(
