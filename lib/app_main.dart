@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/home.dart';
 import 'package:new_mg_app/components/my_numbers.dart';
+import 'package:new_mg_app/components/scratch_card.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,6 +14,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const Home(),
         '/my-numbers': (context) => const MyNumbers(),
+        '/scratch-card': (context) => const ScratchCard()
       },
     );
   }

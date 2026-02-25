@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/custom_top_bar/custom_top_bar.dart';
+import 'package:new_mg_app/components/custom_top_bar.dart';
 import 'package:new_mg_app/components/my_number_card.dart';
 
 class MyNumbers extends StatelessWidget {

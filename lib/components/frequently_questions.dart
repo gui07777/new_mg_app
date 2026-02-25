@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FrequentlyQuestions extends StatefulWidget {
-  final title, subtitle;
+  final String title, subtitle;
   
   const FrequentlyQuestions({
     super.key,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/scratch_card.dart';
 
 class CampaignCards extends StatefulWidget {
   final String titulo, data, valor;
@@ -22,7 +23,9 @@ class _CampaignCardsState extends State<CampaignCards> {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const ScratchCard()));
+        },
         borderRadius: BorderRadius.circular(15),
         child: Container(
           padding: const EdgeInsets.all(5),

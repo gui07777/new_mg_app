@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/campaign_cards.dart';
-import 'package:new_mg_app/components/custom_top_bar/custom_top_bar.dart';
+import 'package:new_mg_app/components/custom_top_bar.dart';
 import 'dart:async';
 import 'package:new_mg_app/components/carousel_campaign.dart';
 import 'package:new_mg_app/components/frequently_questions.dart';
