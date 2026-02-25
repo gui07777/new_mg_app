@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
                     margin: EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       children: [
-                        Icon(Icons.light_sharp, color: Colors.deepOrangeAccent),
+                        Icon(Icons.bolt, color: Colors.deepOrangeAccent),
                         const SizedBox(width: 5),
                         Row(
                           spacing: 8,
@@ -120,10 +120,9 @@ class _HomeState extends State<Home> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       children: [
-                        Icon(Icons.people, color: Colors.amber),
                         SizedBox(width: 5),
                         Text(
-                          "Perguntas frequentes",
+                          "🤷 Perguntas frequentes",
                           style: TextStyle(
                             fontSize: 21,
                             fontWeight: FontWeight.bold,

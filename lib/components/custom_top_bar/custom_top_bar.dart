@@ -74,7 +74,7 @@ class CustomTopBar extends StatelessWidget {
                   Row(
                     children: [
                       SizedBox(width: 10),
-                      Icon(Icons.star, color: Colors.amberAccent, size: 15),
+                      Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 15),
                       TextButton(
                         onPressed: () => Navigator.pushNamed(context, '/'),
                         style: TextButton.styleFrom(padding: EdgeInsets.all(2)),
