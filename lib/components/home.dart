@@ -3,6 +3,7 @@ import 'package:new_mg_app/components/campaign_cards.dart';
 import 'package:new_mg_app/components/custom_top_bar/custom_top_bar.dart';
 import 'dart:async';
 import 'package:new_mg_app/components/carousel_campaign.dart';
+import 'package:new_mg_app/components/frequently_questions.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -150,17 +151,17 @@ class _HomeState extends State<Home> {
                   ),
                   Padding(padding: const EdgeInsets.symmetric(vertical: 5)),
 
-                  _buildCurrentlyQuestions(
-                    "Como acesso minhas compras?",
-                    'Existem duas formas de você conseguir acessar suas compras, a primeira é logando no site, abrindo o menu do site e clicando em "Meus Títulos" e a segunda forma é visitando a campanha e clicando em "Ver meus títulos" logo a baixo das condições de participação.',
+                  FrequentlyQuestions(
+                    title: "Como acesso minhas compras?",
+                    subtitle: 'Existem duas formas de você conseguir acessar suas compras, a primeira é logando no site, abrindo o menu do site e clicando em "Meus Títulos" e a segunda forma é visitando a campanha e clicando em "Ver meus títulos" logo a baixo das condições de participação.',
                   ),
-                  _buildCurrentlyQuestions(
-                    "Como é o processo do sorteio?",
-                    'O sorteio será realizado com base na extração da Loteria Federal, conforme Condições de Participação constantes no título.',
+                  FrequentlyQuestions(
+                    title: "Como é o processo do sorteio?",
+                    subtitle: 'O sorteio será realizado com base na extração da Loteria Federal, conforme Condições de Participação constantes no título.',
                   ),
-                  _buildCurrentlyQuestions(
-                    " Onde o prêmio será entregue?",
-                    'Não há necessidade de se preocupar com os trâmites relacionados à entrega do prêmio, pois nós cuidaremos de tudo.',
+                  FrequentlyQuestions(
+                    title: " Onde o prêmio será entregue?",
+                    subtitle: 'Não há necessidade de se preocupar com os trâmites relacionados à entrega do prêmio, pois nós cuidaremos de tudo.',
                   ),
 
                 ],
@@ -168,35 +169,6 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildCurrentlyQuestions(String title, String subtitle) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
-      child: ExpansionTile(
-        visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-        collapsedShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-
-        title: Text(
-          title,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-        ),
-        collapsedBackgroundColor: Colors.white,
-        backgroundColor: Colors.white,
-        trailing: SizedBox.shrink(),
-        leading: Icon(Icons.arrow_forward, size: 18),
-
-        children: [
-          ListTile(title: Text(subtitle, style: TextStyle(fontSize: 14))),
-        ],
       ),
     );
   }
