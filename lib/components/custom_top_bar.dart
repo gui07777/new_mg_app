@@ -43,7 +43,7 @@ class CustomTopBar extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(right: 16.0),
           child: InkWell(
-            onTap: () => print("Abrir link suporte"),
+            onTap: () => {},
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
