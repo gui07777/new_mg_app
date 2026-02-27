@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/navigation_modal.dart';
-import 'package:new_mg_app/components/sliver_campaign_app_bar.dart';
+import 'package:new_mg_app/components/description_regulation_component.dart';
+import 'package:new_mg_app/components/navigation_modal_component.dart';
+import 'package:new_mg_app/components/sliver_campaign_app_bar_component.dart';
 
 class CampaignDetailsPage extends StatefulWidget {
   final String imageUrl;
@@ -30,7 +31,7 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
             parent: AlwaysScrollableScrollPhysics(),
           ),
           slivers: [
-            SliverCampaignAppBar(
+            SliverCampaignAppBarComponent(
               imageUrl: widget.imageUrl,
               onMenuPressed: () => _openMenu(context),
               title: widget.title,
@@ -182,7 +183,6 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF198754),
-                                // padding: const EdgeInsets.symmetric(vertical: 10),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -202,29 +202,12 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 5),
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: Colors.grey.shade300),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.arrow_downward, size: 16),
-                          SizedBox(width: 5),
-                          Text(
-                            "Descrição/Regulamento",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                    DescriptionRegulationComponent(
+                      description: 'Raspadinha',
+                      prizes: '+ Prêmio - R\$0,01',
                     ),
-                    const SizedBox(height: 60),
+                    const SizedBox(height: 50),
                     Row(
                       children: [
                         Text(
@@ -320,7 +303,7 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
       context: context,
       transitionDuration: const Duration(milliseconds: 400),
       pageBuilder: (context, animation, secondaryAnimation) =>
-          const NavigationModal(),
+          const NavigationModalComponent(),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(
           position: Tween(begin: const Offset(0, -1), end: Offset.zero).animate(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class MyNumbersCard extends StatefulWidget {
+class MyNumbersCardComponent extends StatefulWidget {
   final String name, phone, date, value, status, totalQuantity;
 
-  const MyNumbersCard({
+  const MyNumbersCardComponent({
     super.key,
     required this.name,
     required this.phone,
@@ -14,10 +14,10 @@ class MyNumbersCard extends StatefulWidget {
   });
 
   @override
-  State<MyNumbersCard> createState() => _MyNumbersCardState();
+  State<MyNumbersCardComponent> createState() => _MyNumbersCardState();
 }
 
-class _MyNumbersCardState extends State<MyNumbersCard> {
+class _MyNumbersCardState extends State<MyNumbersCardComponent> {
   bool _isExpanded = false;
 
   @override

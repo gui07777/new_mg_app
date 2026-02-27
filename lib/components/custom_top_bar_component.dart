@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/navigation_modal.dart';
+import 'package:new_mg_app/components/navigation_modal_component.dart';
 
-class CustomTopBar extends StatelessWidget {
-  const CustomTopBar({super.key});
+class CustomTopBarComponent extends StatelessWidget {
+  const CustomTopBarComponent({super.key});
 
   void _openMenu(BuildContext context) {
     showGeneralDialog(
       context: context,
       transitionDuration: const Duration(milliseconds: 400),
       pageBuilder: (context, animation, secondaryAnimation) {
-        return const NavigationModal();
+        return const NavigationModalComponent();
       },
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(

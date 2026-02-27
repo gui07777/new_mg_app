@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class SliverCampaignAppBar extends StatelessWidget {
+class SliverCampaignAppBarComponent extends StatelessWidget {
   final String imageUrl;
   final VoidCallback onMenuPressed;
   final String title;
 
-  const SliverCampaignAppBar({
+  const SliverCampaignAppBarComponent({
     super.key,
     required this.imageUrl,
     required this.onMenuPressed,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/campaign_details_page.dart';
+import 'package:new_mg_app/pages/campaign_details_page.dart';
 
-class CampaignCards extends StatefulWidget {
+class CampaignCardsComponent extends StatefulWidget {
   final String titulo, data, valor;
 
-  const CampaignCards({
+  const CampaignCardsComponent({
     super.key,
     required this.titulo,
     required this.data,
@@ -12,10 +12,10 @@ class CampaignCards extends StatefulWidget {
   });
 
   @override
-  State<CampaignCards> createState() => _CampaignCardsState();
+  State<CampaignCardsComponent> createState() => _CampaignCardsState();
 }
 
-class _CampaignCardsState extends State<CampaignCards> {
+class _CampaignCardsState extends State<CampaignCardsComponent> {
   final _badgeOpacity = 1.0;
 
   @override

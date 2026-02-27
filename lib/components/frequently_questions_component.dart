@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class FrequentlyQuestions extends StatefulWidget {
+class FrequentlyQuestionsComponent extends StatefulWidget {
   final String title, subtitle;
   
-  const FrequentlyQuestions({
+  const FrequentlyQuestionsComponent({
     super.key,
     required this.title,
     required this.subtitle,
   });
 
   @override
-  State<FrequentlyQuestions> createState() => _FrequentlyQuestionsState();
+  State<FrequentlyQuestionsComponent> createState() => _FrequentlyQuestionsState();
 }
 
-class _FrequentlyQuestionsState extends State<FrequentlyQuestions> {
+class _FrequentlyQuestionsState extends State<FrequentlyQuestionsComponent> {
   @override
   Widget build(BuildContext context) {
     return Padding(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/home.dart';
-import 'package:new_mg_app/components/my_numbers.dart';
+import 'package:new_mg_app/pages/home_page.dart';
+import 'package:new_mg_app/pages/my_numbers_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,8 +11,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const Home(),
-        '/my-numbers': (context) => const MyNumbers(),
+        '/': (context) => const HomePage(),
+        '/my-numbers': (context) => const MyNumbersPage(),
       },
     );
   }

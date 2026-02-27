@@ -8,8 +8,8 @@ class MenuItem {
   MenuItem(this.title, this.icon, this.routeName);
 }
 
-class NavigationModal extends StatelessWidget {
-  const NavigationModal({super.key});
+class NavigationModalComponent extends StatelessWidget {
+  const NavigationModalComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
