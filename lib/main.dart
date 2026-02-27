@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/app/app_bar.dart';
+import 'package:new_mg_app/app_main.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Bar();
-  }
-
-  
-}
-
