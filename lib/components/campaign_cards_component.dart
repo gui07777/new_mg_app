@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/get_it_now_animation_component.dart';
 import 'package:new_mg_app/pages/campaign_details_page.dart';
 
 class CampaignCardsComponent extends StatefulWidget {
@@ -16,8 +19,6 @@ class CampaignCardsComponent extends StatefulWidget {
 }
 
 class _CampaignCardsState extends State<CampaignCardsComponent> {
-  final _badgeOpacity = 1.0;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -89,28 +90,7 @@ class _CampaignCardsState extends State<CampaignCardsComponent> {
                             ),
                           ),
                           const SizedBox(height: 6),
-                          AnimatedOpacity(
-                            opacity: _badgeOpacity,
-                            duration: const Duration(milliseconds: 1000),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 49, 136, 51),
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: const Text(
-                                "Adquira já",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
+                          GetItNowAnimationComponent()
                         ],
                       ),
                       Row(

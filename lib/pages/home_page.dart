@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/campaign_cards_component.dart';
 import 'package:new_mg_app/components/custom_top_bar_component.dart';
-import 'dart:async';
 import 'package:new_mg_app/components/carousel_campaign_component.dart';
 import 'package:new_mg_app/components/frequently_questions_component.dart';
 
@@ -13,27 +12,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
-  double _badgeOpacity = 1.0;
-  late Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _timer = Timer.periodic(const Duration(milliseconds: 800), (timer) {
-      if (mounted) {
-        setState(() {
-          _badgeOpacity = _badgeOpacity == 1.0 ? 0.0 : 1.0;
-        });
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,17 +131,19 @@ class _HomeState extends State<HomePage> {
 
                   FrequentlyQuestionsComponent(
                     title: "Como acesso minhas compras?",
-                    subtitle: 'Existem duas formas de você conseguir acessar suas compras, a primeira é logando no site, abrindo o menu do site e clicando em "Meus Títulos" e a segunda forma é visitando a campanha e clicando em "Ver meus títulos" logo a baixo das condições de participação.',
+                    subtitle:
+                        'Existem duas formas de você conseguir acessar suas compras, a primeira é logando no site, abrindo o menu do site e clicando em "Meus Títulos" e a segunda forma é visitando a campanha e clicando em "Ver meus títulos" logo a baixo das condições de participação.',
                   ),
                   FrequentlyQuestionsComponent(
                     title: "Como é o processo do sorteio?",
-                    subtitle: 'O sorteio será realizado com base na extração da Loteria Federal, conforme Condições de Participação constantes no título.',
+                    subtitle:
+                        'O sorteio será realizado com base na extração da Loteria Federal, conforme Condições de Participação constantes no título.',
                   ),
                   FrequentlyQuestionsComponent(
                     title: " Onde o prêmio será entregue?",
-                    subtitle: 'Não há necessidade de se preocupar com os trâmites relacionados à entrega do prêmio, pois nós cuidaremos de tudo.',
+                    subtitle:
+                        'Não há necessidade de se preocupar com os trâmites relacionados à entrega do prêmio, pois nós cuidaremos de tudo.',
                   ),
-
                 ],
               ),
             ),

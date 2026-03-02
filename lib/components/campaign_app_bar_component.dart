@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/get_it_now_animation_component.dart';
 
-class SliverCampaignAppBarComponent extends StatelessWidget {
+class CampaignAppBarComponent extends StatelessWidget {
   final String imageUrl;
   final VoidCallback onMenuPressed;
   final String title;
 
-  const SliverCampaignAppBarComponent({
+  const CampaignAppBarComponent({
     super.key,
     required this.imageUrl,
     required this.onMenuPressed,
@@ -50,7 +51,7 @@ class SliverCampaignAppBarComponent extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         stretchModes: const [
           StretchMode.zoomBackground, // Faz a imagem dar zoom ao puxar
-          StretchMode.fadeTitle,      // Faz o conteúdo sumir suavemente
+          StretchMode.fadeTitle, // Faz o conteúdo sumir suavemente
         ],
         centerTitle: true,
         titlePadding: EdgeInsets.zero,
@@ -88,24 +89,7 @@ class SliverCampaignAppBarComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF1B8E53),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Text(
-                      "Adquira já!",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  GetItNowAnimationComponent(),
                   const SizedBox(height: 8),
                   Text(
                     title,

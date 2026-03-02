@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/description_regulation_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
-import 'package:new_mg_app/components/sliver_campaign_app_bar_component.dart';
+import 'package:new_mg_app/components/campaign_app_bar_component.dart';
 
 class CampaignDetailsPage extends StatefulWidget {
   final String imageUrl;
@@ -31,7 +31,7 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
             parent: AlwaysScrollableScrollPhysics(),
           ),
           slivers: [
-            SliverCampaignAppBarComponent(
+            CampaignAppBarComponent(
               imageUrl: widget.imageUrl,
               onMenuPressed: () => _openMenu(context),
               title: widget.title,
