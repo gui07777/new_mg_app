@@ -29,15 +29,15 @@ class CustomTopBarComponent extends StatelessWidget {
       pinned: true,
       floating: true,
       snap: true,
-      expandedHeight: 120.0,
-      toolbarHeight: 80,
+      expandedHeight: 140.0,
+      toolbarHeight: 100,
       automaticallyImplyLeading: false,
       leadingWidth: 70,
       leading: IconButton(
         icon: const Icon(Icons.sort, color: Colors.white),
         onPressed: () => _openMenu(context),
       ),
-      title: Image.asset('assets/icons/codetech.png', height: 45),
+      title: Image.asset('assets/icons/codetech.png', height: 60),
       centerTitle: true,
       actions: [
         Padding(

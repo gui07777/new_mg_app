@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/get_it_now_animation_component.dart';
 import 'package:new_mg_app/pages/campaign_details_page.dart';

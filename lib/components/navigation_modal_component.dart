@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/login_modal_component.dart';
 
 class MenuItem {
   final String title;
@@ -8,8 +9,16 @@ class MenuItem {
   MenuItem(this.title, this.icon, this.routeName);
 }
 
-class NavigationModalComponent extends StatelessWidget {
+class NavigationModalComponent extends StatefulWidget {
   const NavigationModalComponent({super.key});
+
+  @override
+  State<NavigationModalComponent> createState() =>
+      _NavigationModalComponentState();
+}
+
+class _NavigationModalComponentState extends State<NavigationModalComponent> {
+  bool _logged = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,12 @@ class NavigationModalComponent extends StatelessWidget {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 36, right: 20, top: 10, bottom: 10),
+              padding: const EdgeInsets.only(
+                left: 36,
+                right: 20,
+                top: 10,
+                bottom: 10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -100,10 +114,16 @@ class NavigationModalComponent extends StatelessWidget {
                       borderRadius: BorderRadius.circular(25),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (!_logged) {
+                      LoginModalComponent.show(context);
+                    } else {
+                      //logica
+                    }
+                  },
                   icon: const Icon(Icons.logout, color: Colors.white),
-                  label: const Text(
-                    'Sair',
+                  label: Text(
+                    _logged ? 'Sair' : 'Entrar',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
