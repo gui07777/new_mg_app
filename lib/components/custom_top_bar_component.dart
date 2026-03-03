@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
 
 class CustomTopBarComponent extends StatelessWidget {
   const CustomTopBarComponent({super.key});
+
+  static bool logged = false;
 
   void _openMenu(BuildContext context) {
     showGeneralDialog(
@@ -67,14 +70,20 @@ class CustomTopBarComponent extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 10.0),
               decoration: const BoxDecoration(
                 color: Colors.black,
-                border: Border(top: BorderSide(color: Color(0xFFFFFFFF), width: 0.2)),
+                border: Border(
+                  top: BorderSide(color: Color(0xFFFFFFFF), width: 0.2),
+                ),
               ),
               child: Row(
                 children: [
                   Row(
                     children: [
                       SizedBox(width: 10),
-                      Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 15),
+                      Icon(
+                        Icons.auto_awesome,
+                        color: Colors.amberAccent,
+                        size: 15,
+                      ),
                       TextButton(
                         onPressed: () => Navigator.pushNamed(context, '/'),
                         style: TextButton.styleFrom(padding: EdgeInsets.all(2)),
@@ -90,7 +99,13 @@ class CustomTopBarComponent extends StatelessWidget {
                     ],
                   ),
                   TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/my-numbers'),
+                    onPressed: () {
+                      if (logged) {
+                        Navigator.pushNamed(context, '/my-numbers');
+                      } else {
+                        LoginModalComponent.show(context, WhoCall.customTopBar);
+                      }
+                    },
                     child: const Text(
                       'Meus títulos',
                       style: TextStyle(color: Color(0xFFdedede), fontSize: 15),

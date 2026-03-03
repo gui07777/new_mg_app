@@ -1,5 +1,7 @@
+import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/description_regulation_component.dart';
+import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
 import 'package:new_mg_app/components/campaign_app_bar_component.dart';
 
@@ -110,33 +112,40 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
 
                     Row(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF00307A),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            children: const [
-                              Text(
-                                '+1',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              _quantity++;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 15,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF00307A),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              children: const [
+                                Text(
+                                  '+1',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                'SELECIONAR',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
+                                Text(
+                                  'SELECIONAR',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -177,27 +186,94 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                           ),
                         ),
                         SizedBox(width: 15),
+                        // Expanded(
+                        //   child: SizedBox(
+                        //     height: 50,
+                        //     child: ElevatedButton(
+                        //       style: ElevatedButton.styleFrom(
+                        //         backgroundColor: const Color(0xFF198754),
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(10),
+                        //         ),
+                        //       ),
+                        //       onPressed: () {
+                        //         LoginModalComponent.show(
+                        //           context,
+                        //           WhoCall.campaignDetails,
+                        //         );
+                        //       },
+
+                        //       child: Text(
+                        //         'Participar\nR\$ 0,0$_quantity',
+                        //         textAlign: TextAlign.center,
+                        //         style: TextStyle(
+                        //           fontSize: 16,
+                        //           fontWeight: FontWeight.bold,
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                         Expanded(
-                          child: SizedBox(
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF198754),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                          child: InkWell(
+                            child: SizedBox(
+                              height: 50,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFF198754),
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                              ),
-                              onPressed: () {},
-                              child: Text(
-                                'Participar\nR\$ 0,0$_quantity',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        BootstrapIcons.arrow_right_square_fill,
+                                        color: Colors.white,
+                                        size: 32,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Participar',
+                                            style: TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.white,
+                                              height: 1.8,
+                                            ),
+                                          ),
+                                          Opacity(
+                                            opacity: 0.75,
+                                            child: Text(
+                                              'R\$ 0,0$_quantity',
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600,
+                                                color: Color(0xFFFFFFFF),
+                                                height: 0.4,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
+                            onTap: () {
+                              LoginModalComponent.show(
+                                context,
+                                WhoCall.campaignDetails,
+                              );
+                            },
                           ),
                         ),
                       ],

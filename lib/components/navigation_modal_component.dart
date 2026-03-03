@@ -18,7 +18,7 @@ class NavigationModalComponent extends StatefulWidget {
 }
 
 class _NavigationModalComponentState extends State<NavigationModalComponent> {
-  bool _logged = false;
+  bool logged = false;
 
   @override
   Widget build(BuildContext context) {
@@ -115,15 +115,15 @@ class _NavigationModalComponentState extends State<NavigationModalComponent> {
                     ),
                   ),
                   onPressed: () {
-                    if (!_logged) {
-                      LoginModalComponent.show(context);
+                    if (!logged) {
+                      LoginModalComponent.show(context, WhoCall.navigationModal);
                     } else {
                       //logica
                     }
                   },
                   icon: const Icon(Icons.logout, color: Colors.white),
                   label: Text(
-                    _logged ? 'Sair' : 'Entrar',
+                    logged ? 'Sair' : 'Entrar',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
