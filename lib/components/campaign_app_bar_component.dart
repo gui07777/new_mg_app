@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/get_it_now_animation_component.dart';
+import 'package:new_mg_app/components/login_modal_component.dart';
 
 class CampaignAppBarComponent extends StatelessWidget {
   final String imageUrl;
@@ -114,27 +115,32 @@ class CampaignAppBarComponent extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Container(
-                height: 30,
-                decoration: const BoxDecoration(color: Color(0xFF1A1A1A)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Icons.shopping_cart_outlined,
-                      color: Colors.white,
-                      size: 18,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      'Meus títulos',
-                      style: TextStyle(
+              child: InkWell(
+                onTap:() {
+                LoginModalComponent.show(context, WhoCall.campaignAppBar);
+                },
+                child: Container(
+                  height: 30,
+                  decoration: const BoxDecoration(color: Color(0xFF1A1A1A)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.shopping_cart_outlined,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        size: 18,
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 8),
+                      Text(
+                        'Meus títulos',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

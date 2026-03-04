@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-enum WhoCall { navigationModal, customTopBar, campaignDetails }
+enum WhoCall { navigationModal, customTopBar, campaignDetails, campaignAppBar }
 
 class LoginModalComponent extends StatelessWidget {
   final WhoCall origin;
@@ -20,6 +20,8 @@ class LoginModalComponent extends StatelessWidget {
         return messages[1];
       case WhoCall.campaignDetails:
         return messages[2];
+      case WhoCall.campaignAppBar:
+        return messages[1];
     }
   }
 
@@ -40,9 +42,11 @@ class LoginModalComponent extends StatelessWidget {
     final WhoCall switchCase = origin;
 
     return Dialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       constraints: BoxConstraints(
         maxWidth: MediaQuery.of(context).size.width * 0.95,
+        minWidth: MediaQuery.of(context).size.width * 0.95,
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -78,14 +82,16 @@ class LoginModalComponent extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              'Informe seu telefone',
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF212b36),
-              ),
-            ),
+            switchCase == WhoCall.campaignDetails
+                ? Text(
+                    'Informe seu telefone',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF212b36),
+                    ),
+                  )
+                : Container(),
             TextField(
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               keyboardType: TextInputType.phone,
@@ -117,16 +123,22 @@ class LoginModalComponent extends StatelessWidget {
             ),
             switchCase == WhoCall.campaignDetails
                 ? Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: Opacity(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Opacity(
                       opacity: 0.9,
                       child: Container(
                         decoration: BoxDecoration(
                           color: Color(0xFFfff3cd),
-                          border: Border.all(color: Color(0xFFFFE69C), width: 1),
+                          border: Border.all(
+                            color: Color(0xFFFFE69C),
+                            width: 1,
+                          ),
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 5,
+                          vertical: 4,
+                        ),
                         child: Row(
                           children: [
                             Icon(Icons.info_outline, size: 12),
@@ -139,10 +151,14 @@ class LoginModalComponent extends StatelessWidget {
                         ),
                       ),
                     ),
-                )
+                  )
                 : Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
+                      style: TextButton.styleFrom(
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
                       onPressed: () {},
                       child: Text(
                         'Criar uma conta',
@@ -163,7 +179,9 @@ class LoginModalComponent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
