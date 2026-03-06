@@ -1,9 +1,25 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:new_mg_app/config/dio_client.dart';
+import 'package:new_mg_app/services/client_service.dart';
 
 enum WhoCall { navigationModal, customTopBar, campaignDetails, campaignAppBar }
 
-class LoginModalComponent extends StatelessWidget {
+class AuthResponse {
+  final String? accessToken;
+
+  AuthResponse({this.accessToken});
+
+  factory AuthResponse.fromJson(Map<String, dynamic> json) {
+    return AuthResponse(accessToken: json['accessToken']);
+  }
+}
+
+class LoginModalComponent extends StatefulWidget {
   final WhoCall origin;
 
   static const List<String> messages = [
@@ -11,19 +27,6 @@ class LoginModalComponent extends StatelessWidget {
     'Por favor, entre com seus dados ou faça um cadastro',
     '5 unidade(s) do produto RASPADINHA', //quantidade e produto mocados
   ];
-
-  String getMessage() {
-    switch (origin) {
-      case WhoCall.navigationModal:
-        return messages[0];
-      case WhoCall.customTopBar:
-        return messages[1];
-      case WhoCall.campaignDetails:
-        return messages[2];
-      case WhoCall.campaignAppBar:
-        return messages[1];
-    }
-  }
 
   const LoginModalComponent({super.key, required this.origin});
 
@@ -37,9 +40,29 @@ class LoginModalComponent extends StatelessWidget {
   }
 
   @override
+  State<LoginModalComponent> createState() => _LoginModalComponentState();
+}
+
+class _LoginModalComponentState extends State<LoginModalComponent> {
+  final TextEditingController _phoneController = TextEditingController();
+
+  String getMessage() {
+    switch (widget.origin) {
+      case WhoCall.navigationModal:
+        return LoginModalComponent.messages[0];
+      case WhoCall.customTopBar:
+        return LoginModalComponent.messages[1];
+      case WhoCall.campaignDetails:
+        return LoginModalComponent.messages[2];
+      case WhoCall.campaignAppBar:
+        return LoginModalComponent.messages[1];
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final String messageToShow = getMessage();
-    final WhoCall switchCase = origin;
+    final WhoCall switchCase = widget.origin;
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -92,7 +115,8 @@ class LoginModalComponent extends StatelessWidget {
                     ),
                   )
                 : Container(),
-            TextField(
+            TextFormField(
+              controller: _phoneController,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
@@ -120,6 +144,23 @@ class LoginModalComponent extends StatelessWidget {
                   borderSide: BorderSide(color: Colors.blueAccent, width: 3.0),
                 ),
               ),
+              validator: (value) {
+                String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
+
+                RegExp regex = RegExp(r'^\d{10,11}$');
+
+                if (cleaned == null || cleaned.isEmpty) {
+                  return 'O telefone é obrigatório';
+                } else if (!regex.hasMatch(cleaned)) {
+                  return 'Número de telefone inválido';
+                }
+                return null;
+              },
+
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(11),
+              ],
             ),
             switchCase == WhoCall.campaignDetails
                 ? Padding(
@@ -179,8 +220,37 @@ class LoginModalComponent extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                onPressed: () {
-                  
+                onPressed: () async {
+                  String phone = _phoneController.text;
+                  const storage = FlutterSecureStorage();
+
+                  if (phone.isNotEmpty) {
+                    final clientService = ClientService(DioClient());
+
+                    final authData = await clientService.authenticateClient(
+                      phone,
+                    );
+
+                    if (authData?.accessToken != null) {
+                      await storage.write(
+                        key: 'token',
+                        value: authData!.accessToken,
+                      );
+
+                      final client = await clientService
+                          .getClientByAuthenticated();
+
+                      print('Sucesso! Cliente: $client');
+
+                      // if (mounted) {
+                      //   Navigator.pop(context);
+                      // }
+                    } else {
+                      print(
+                        'Token não recebido. Redirecionando para registro...',
+                      );
+                    }
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
