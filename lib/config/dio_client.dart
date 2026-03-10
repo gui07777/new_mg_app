@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -15,12 +13,18 @@ class DioClient {
 
   final _storage = const FlutterSecureStorage();
 
-
   factory DioClient() => _instance;
   DioClient._internal() {
+    /*
+isso aqui é um interceptador  que vai interceptar todas a requisições antes de serem enviadas.
+Ela consegue colocar headers automaticamente. Então se houver algum token ela informa, se
+não houver simplesmente envia Content-Type: application/json
+*/
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
+          options.headers["Content-Type"] = "application/json";
+
           String? token = await _storage.read(key: 'token');
 
           if (token != null && token.isNotEmpty) {
@@ -29,21 +33,21 @@ class DioClient {
 
           return handler.next(options);
         },
-        onError: (DioException e, handler) {
-          if (e.response?.statusCode == 401) {
-            print("Token expirado ou inválido");
-          }
-          return handler.next(e);
-        },
       ),
     );
   }
 
   Dio get client => _dio;
 
-  Future<dynamic> get(String endpoint, {Map<String, dynamic>? queryParameters}) async {
+  Future<dynamic> get(
+    String endpoint, {
+    Map<String, dynamic>? queryParameters,
+  }) async {
     try {
-      final response = await _dio.get(endpoint, queryParameters: queryParameters);
+      final response = await _dio.get(
+        endpoint,
+        queryParameters: queryParameters,
+      );
       return response.data;
     } catch (e) {
       print(e);

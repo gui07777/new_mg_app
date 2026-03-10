@@ -1,25 +1,15 @@
-// ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_mg_app/config/dio_client.dart';
+import 'package:new_mg_app/providers/auth_provider.dart';
 import 'package:new_mg_app/services/client_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum WhoCall { navigationModal, customTopBar, campaignDetails, campaignAppBar }
 
-class AuthResponse {
-  final String? accessToken;
-
-  AuthResponse({this.accessToken});
-
-  factory AuthResponse.fromJson(Map<String, dynamic> json) {
-    return AuthResponse(accessToken: json['accessToken']);
-  }
-}
-
-class LoginModalComponent extends StatefulWidget {
+class LoginModalComponent extends ConsumerStatefulWidget {
   final WhoCall origin;
 
   static const List<String> messages = [
@@ -40,11 +30,13 @@ class LoginModalComponent extends StatefulWidget {
   }
 
   @override
-  State<LoginModalComponent> createState() => _LoginModalComponentState();
+  ConsumerState<LoginModalComponent> createState() =>
+      _LoginModalComponentState();
 }
 
-class _LoginModalComponentState extends State<LoginModalComponent> {
+class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
   final TextEditingController _phoneController = TextEditingController();
+  bool phoneBrl = true;
 
   String getMessage() {
     switch (widget.origin) {
@@ -227,28 +219,27 @@ class _LoginModalComponentState extends State<LoginModalComponent> {
                   if (phone.isNotEmpty) {
                     final clientService = ClientService(DioClient());
 
-                    final authData = await clientService.authenticateClient(
-                      phone,
+                    final authDataByPhone = await clientService
+                        .authenticateClient(phone);
+
+                    await storage.write(
+                      key: 'token',
+                      value: authDataByPhone!.accessToken,
                     );
 
-                    if (authData?.accessToken != null) {
-                      await storage.write(
-                        key: 'token',
-                        value: authData!.accessToken,
-                      );
+                    final client = await clientService
+                        .getClientByAuthenticated();
 
-                      final client = await clientService
-                          .getClientByAuthenticated();
-
-                      print('Sucesso! Cliente: $client');
-
-                      // if (mounted) {
-                      //   Navigator.pop(context);
-                      // }
+                    if (client.phone.length > 11) {
+                      client.phoneBrl = false;
                     } else {
-                      print(
-                        'Token não recebido. Redirecionando para registro...',
-                      );
+                      client.phoneBrl = true;
+                    }
+
+                    ref.read(authProvider.notifier).setUser(client);
+
+                    if (mounted) {
+                      Navigator.pop(context);
                     }
                   }
                 },

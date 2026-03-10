@@ -1,16 +1,16 @@
-# new_mg_app
+Versão de aplicativo mobile da aplicação web existente: new-mg-rifa
 
-A new Flutter project.
+Criado em flutter por conter um amplo ecossistema para desenvolver interfaces de maneira rápida e eficiente.
 
-## Getting Started
+Riverpod - arquitetura de gerenciamento de estado escolhida.
 
-This project is a starting point for a Flutter application.
+Seguindo o contexto atual:
 
-A few resources to get you started if this is your first Flutter project:
+- Estado de UI complexo
+- Precisa escalar no futuro
+- apenas um desenvolvedor iniciante
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1) Simplicidade - Simples de aplicar em comparação com Bloc, já que o Bloc gera muito código havendo um gasto de tempo maior com estrutura do que com lógica.
+2) Escalabilidade - Mais escalável do que o Provider. Apesar do provider ser mais simples do que o Riverpod, ele não compensa em escalabilidade pois a medida que o app cresce vira uma grande bagunça com várias propriedades dessa arquitetura espalhadas por todo o código do projeto.
+3) Multiuso - havendo necessidade de utilizar estados fora da UI (em services, repositories), é possível por não ser necessário o uso de BuildContext.
+4) Para apenas um desenvolvedor - utilizar bloc por exemplo resultaria em excesso de engenharia, mas por ser apenas um desenvolvedor trabalhando, essa escolha torna mais fácil o desenvolvimento.

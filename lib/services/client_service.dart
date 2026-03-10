@@ -1,35 +1,34 @@
-// ignore_for_file: avoid_print
-
-import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/config/dio_client.dart';
+import 'package:new_mg_app/models/auth_response_model.dart';
+import 'package:new_mg_app/models/client_model.dart';
 
 class ClientService {
   final DioClient _client;
 
   ClientService(this._client);
 
-  Future<AuthResponse?> authenticateClient(String phone) async {
+  String get apiUrl => '${_client.client.options.baseUrl}/client';
+
+  Future<AuthResponseModel?> authenticateClient(String phone) async {
     try {
       final response = await _client.post(
-        '/authenticate',
+        '$apiUrl/authenticate',
         data: {'phone': phone},
       );
-      if (response.data != null) {
-        return AuthResponse.fromJson(response.data);
-      }
+      return AuthResponseModel.fromJson(response['data']);
     } catch (e) {
-      print("Erro de autenticação: $e");
-      return null;
+      print('erro detalhado: $e');
+      throw Exception('Erro na autenticação: $e');
     }
   }
 
-  Future<dynamic> getClientByAuthenticated() async {
+  Future<ClientModel> getClientByAuthenticated() async {
     try {
-      final response = await _client.get('/authenticated');
-      return response.data;
+      final response = await _client.get('$apiUrl/authenticated');
+      print(response);
+      return ClientModel.fromJson(response['data']);
     } catch (e) {
-      print('Erro na autenticação $e');
-      return null;
+      throw Exception('Erro na autenticação: $e');
     }
   }
 }

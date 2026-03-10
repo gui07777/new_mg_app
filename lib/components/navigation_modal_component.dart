@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
+import 'package:new_mg_app/providers/auth_provider.dart';
 
 class MenuItem {
   final String title;
@@ -9,19 +11,14 @@ class MenuItem {
   MenuItem(this.title, this.icon, this.routeName);
 }
 
-class NavigationModalComponent extends StatefulWidget {
+class NavigationModalComponent extends ConsumerWidget {
   const NavigationModalComponent({super.key});
 
   @override
-  State<NavigationModalComponent> createState() =>
-      _NavigationModalComponentState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final client = ref.watch(authProvider);
+    final bool isLogged = client != null;
 
-class _NavigationModalComponentState extends State<NavigationModalComponent> {
-  bool logged = false;
-
-  @override
-  Widget build(BuildContext context) {
     final List<MenuItem> menuItems = [
       MenuItem('Início', Icons.home_outlined, '/'),
       MenuItem('Afiliados', Icons.list_alt, '/afiliados'),
@@ -115,15 +112,18 @@ class _NavigationModalComponentState extends State<NavigationModalComponent> {
                     ),
                   ),
                   onPressed: () {
-                    if (!logged) {
-                      LoginModalComponent.show(context, WhoCall.navigationModal);
+                    if (!isLogged) {
+                      LoginModalComponent.show(
+                        context,
+                        WhoCall.navigationModal,
+                      );
                     } else {
-                      //logica
+                      ref.read(authProvider.notifier).logout();
                     }
                   },
                   icon: const Icon(Icons.logout, color: Colors.white),
                   label: Text(
-                    logged ? 'Sair' : 'Entrar',
+                    isLogged ? 'Sair' : 'Entrar',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,

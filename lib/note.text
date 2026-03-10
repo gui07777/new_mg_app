@@ -1,0 +1,1 @@
+parei na lógica de autenticação na parte onde ele deve setar o token no sharedPreferences e mandar na segunda requisição
