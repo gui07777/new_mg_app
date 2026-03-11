@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
+import 'package:new_mg_app/components/register_modal_component.dart';
 
 class CustomTopBarComponent extends StatelessWidget {
   const CustomTopBarComponent({super.key});
@@ -53,7 +54,7 @@ class CustomTopBarComponent extends StatelessWidget {
                 Icon(Icons.sms, color: Colors.white, size: 24),
                 Text(
                   'Suporte',
-                  style: TextStyle(color: Colors.white, fontSize: 10),
+                  style: TextStyle(color: Color(0xFFFDFFA9), fontSize: 10),
                 ),
               ],
             ),

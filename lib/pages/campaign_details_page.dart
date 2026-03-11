@@ -4,6 +4,7 @@ import 'package:new_mg_app/components/description_regulation_component.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
 import 'package:new_mg_app/components/campaign_app_bar_component.dart';
+import 'package:new_mg_app/components/register_modal_component.dart';
 
 class CampaignDetailsPage extends StatefulWidget {
   final String imageUrl;
@@ -110,44 +111,15 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                     ),
                     const SizedBox(height: 5),
 
-                    Row(
+                    Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
                       children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              _quantity++;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 20,
-                              vertical: 15,
-                            ),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF00307A),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Column(
-                              children: const [
-                                Text(
-                                  '+1',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  'SELECIONAR',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        _buildSelectButton(),
+                        _buildSelectButton(),
+                        _buildSelectButton(),
+                        _buildSelectButton(),
+                        _buildSelectButton(),
                       ],
                     ),
                     const SizedBox(height: 5),
@@ -186,35 +158,6 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                           ),
                         ),
                         SizedBox(width: 15),
-                        // Expanded(
-                        //   child: SizedBox(
-                        //     height: 50,
-                        //     child: ElevatedButton(
-                        //       style: ElevatedButton.styleFrom(
-                        //         backgroundColor: const Color(0xFF198754),
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.circular(10),
-                        //         ),
-                        //       ),
-                        //       onPressed: () {
-                        //         LoginModalComponent.show(
-                        //           context,
-                        //           WhoCall.campaignDetails,
-                        //         );
-                        //       },
-
-                        //       child: Text(
-                        //         'Participar\nR\$ 0,0$_quantity',
-                        //         textAlign: TextAlign.center,
-                        //         style: TextStyle(
-                        //           fontSize: 16,
-                        //           fontWeight: FontWeight.bold,
-                        //           color: Colors.white,
-                        //         ),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                         Expanded(
                           child: InkWell(
                             child: SizedBox(
@@ -278,12 +221,30 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 10),
+                    Wrap(
+                      runSpacing: 6,
+                      children: [
+                        _buildCombos(),
+                        _buildCombos(),
+                        _buildCombos(),
+                      ],
+                    ),
                     const SizedBox(height: 5),
                     DescriptionRegulationComponent(
                       description: 'Raspadinha',
                       prizes: '+ Prêmio - R\$0,01',
                     ),
                     const SizedBox(height: 50),
+                    Wrap(
+                      runSpacing: 5,
+                      children: [
+                        _buildGreenCardPrizeName(),
+                        _buildGreenCardPrizeDetails(),
+                        _buildSeeMoreButton(),
+                      ],
+                    ),
+                    const SizedBox(height: 45),
                     Row(
                       children: [
                         Text(
@@ -358,12 +319,12 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                       ],
                     ),
                     SizedBox(height: 10),
-                    _buildPrizes('PREMIO', 'Disponível'),
-                    _buildPrizes('PREMIO', 'Disponível'),
-                    _buildPrizes('PREMIO', 'Disponível'),
-                    _buildPrizes('PREMIO', 'Disponível'),
-                    _buildPrizes('PREMIO', 'Disponível'),
-                    _buildPrizes('PREMIO', 'Disponível'),
+                    _buildPrizeStatus('PREMIO', 'Disponível'),
+                    _buildPrizeStatus('PREMIO', 'Disponível'),
+                    _buildPrizeStatus('PREMIO', 'Disponível'),
+                    _buildPrizeStatus('PREMIO', 'Disponível'),
+                    _buildPrizeStatus('PREMIO', 'Disponível'),
+                    _buildPrizeStatus('PREMIO', 'Disponível'),
                   ],
                 ),
               ),
@@ -390,39 +351,225 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
       },
     );
   }
-}
 
-Widget _buildPrizes(String prizeName, String status) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-    child: Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+  Widget _buildPrizeStatus(String prizeName, String status) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        padding: EdgeInsets.all(3),
+        width: double.infinity,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              prizeName,
+              style: TextStyle(
+                fontSize: 14,
+                color: Color(0xFF171717),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Text(
+              status,
+              style: TextStyle(
+                fontSize: 14,
+                color: Color(0xFF171717),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
       ),
-      padding: EdgeInsets.all(3),
-      width: double.infinity,
+    );
+  }
+
+  Widget _buildSelectButton() {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _quantity++;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 15),
+        decoration: BoxDecoration(
+          color: const Color(0xFF00307A),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: const [
+            Text(
+              '+1',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              'SELECIONAR',
+              style: TextStyle(color: Colors.white, fontSize: 10),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCombos() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [Color(0xFFA23839), Color(0xFFE25A8B)],
+          stops: [0.0, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(5),
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Text(
+                '2 Títulos',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+              Opacity(
+                opacity: 0.75,
+                child: Text(
+                  'por R\$ 0,02',
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFFFFFFFF),
+                    height: 0.4,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                'Recebe:',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+              Text(
+                '2 Caixas',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  height: 0.4,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGreenCardPrizeName() {
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: Color(0xFF1bee43),
+      ),
+      child: Text(
+        'Menor e Maior Título',
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w600,
+          fontSize: 15,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGreenCardPrizeDetails() {
+    return Container(
+      height: 150,
+      alignment: Alignment.center,
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color(0xFF1BEE43),
+            const Color(0xFF03350C).withOpacity(0.294),
+          ],
+          stops: const [0.0, 1.0],
+        ),
+      ),
+      child: Column(
+        spacing: 18,
         children: [
           Text(
-            prizeName,
+            'teste',
             style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF171717),
+              color: Colors.black,
               fontWeight: FontWeight.w600,
+              fontSize: 28,
             ),
           ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            decoration: BoxDecoration(
+              color: Color.fromRGBO(255, 255, 255, 0.4),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text('Vencedor: Dani Título: 461003'),
+          ),
           Text(
-            status,
+            'teste',
             style: TextStyle(
-              fontSize: 14,
-              color: Color(0xFF171717),
+              color: Colors.black,
               fontWeight: FontWeight.w600,
+              fontSize: 18,
             ),
           ),
         ],
       ),
-    ),
-  );
+    );
+  }
+
+  Widget _buildSeeMoreButton() {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF198754),
+        minimumSize: Size(double.infinity, 40),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadiusGeometry.circular(5),
+        ),
+      ),
+      onPressed: () {},
+      child: Text(
+        'Ver mais',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
 }

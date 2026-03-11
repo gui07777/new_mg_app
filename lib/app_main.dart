@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/pages/campaigns_page.dart';
 import 'package:new_mg_app/pages/home_page.dart';
 import 'package:new_mg_app/pages/my_numbers_page.dart';
 
@@ -13,7 +14,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const HomePage(),
         '/my-numbers': (context) => const MyNumbersPage(),
+        '/campaigns': (context) => const CampaignsPage()
       },
+      theme: ThemeData(fontFamily: 'Montserrat', useMaterial3: true),
     );
   }
 }

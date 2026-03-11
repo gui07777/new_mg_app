@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/get_it_now_animation_component.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
+import 'package:new_mg_app/components/register_modal_component.dart';
 
 class CampaignAppBarComponent extends StatelessWidget {
   final String imageUrl;
@@ -28,7 +29,7 @@ class CampaignAppBarComponent extends StatelessWidget {
         icon: const Icon(Icons.sort, color: Colors.white),
         onPressed: onMenuPressed,
       ),
-      title: Image.asset('assets/icons/codetech.png', height: 45),
+      title: Image.asset('assets/icons/codetech.png', height: 60),
       centerTitle: true,
       actions: [
         Padding(
@@ -41,7 +42,7 @@ class CampaignAppBarComponent extends StatelessWidget {
                 Icon(Icons.sms, color: Colors.white, size: 24),
                 Text(
                   'Suporte',
-                  style: TextStyle(color: Colors.white, fontSize: 10),
+                  style: TextStyle(color: Color(0xFFFDFFA9), fontSize: 10),
                 ),
               ],
             ),

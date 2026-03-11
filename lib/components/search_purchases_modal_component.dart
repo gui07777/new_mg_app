@@ -9,9 +9,7 @@ import 'package:new_mg_app/providers/auth_provider.dart';
 import 'package:new_mg_app/services/client_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
-
-class LoginModalComponent extends ConsumerStatefulWidget {
+class SearchPurchasesModalComponent extends ConsumerStatefulWidget {
   final WhoCall origin;
 
   static const List<String> messages = [
@@ -20,36 +18,37 @@ class LoginModalComponent extends ConsumerStatefulWidget {
     '5 unidade(s) do produto RASPADINHA', //quantidade e produto mocados
   ];
 
-  const LoginModalComponent({super.key, required this.origin});
+  const SearchPurchasesModalComponent({super.key, required this.origin});
 
   static Future<void> show(BuildContext context, WhoCall origin) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return LoginModalComponent(origin: origin);
+        return SearchPurchasesModalComponent(origin: origin);
       },
     );
   }
 
   @override
-  ConsumerState<LoginModalComponent> createState() =>
-      _LoginModalComponentState();
+  ConsumerState<SearchPurchasesModalComponent> createState() =>
+      _SearchPurchasesModalComponentState();
 }
 
-class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
+class _SearchPurchasesModalComponentState
+    extends ConsumerState<SearchPurchasesModalComponent> {
   final TextEditingController _phoneController = TextEditingController();
   bool phoneBrl = true;
 
   String getMessage() {
     switch (widget.origin) {
       case WhoCall.navigationModal:
-        return LoginModalComponent.messages[0];
+        return SearchPurchasesModalComponent.messages[0];
       case WhoCall.customTopBar:
-        return LoginModalComponent.messages[1];
+        return SearchPurchasesModalComponent.messages[1];
       case WhoCall.campaignDetails:
-        return LoginModalComponent.messages[2];
+        return SearchPurchasesModalComponent.messages[2];
       case WhoCall.campaignAppBar:
-        return LoginModalComponent.messages[1];
+        return SearchPurchasesModalComponent.messages[1];
     }
   }
 
@@ -74,7 +73,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Login',
+                  'Buscar compras',
                   style: TextStyle(
                     fontSize: 20,
                     color: Color(0xFF212b36),
@@ -101,7 +100,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
             widget.origin == WhoCall.campaignDetails
                 ? Text(
                     'Informe seu telefone',
-                    
+
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -109,17 +108,21 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
                     ),
                   )
                 : Container(),
+            Text(
+              'Selecionar sorteio',
+              style: TextStyle(
+                color: Color(0xFF212b36),
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+                height: 2.2,
+              ),
+            ),
             TextFormField(
               controller: _phoneController,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                prefixIconConstraints: const BoxConstraints(
-                  minWidth: 40,
-                  maxHeight: 25,
-                ),
-                prefixIcon: const Icon(FontAwesomeIcons.whatsapp, size: 18),
-                hintText: '(__) _____-____',
+                
                 hintStyle: const TextStyle(fontSize: 16),
                 isDense: true,
                 contentPadding: const EdgeInsets.symmetric(
@@ -138,72 +141,122 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
                   borderSide: BorderSide(color: Colors.blueAccent, width: 3.0),
                 ),
               ),
-              validator: (value) {
-                String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
-
-                RegExp regex = RegExp(r'^\d{10,11}$');
-
-                if (cleaned == null || cleaned.isEmpty) {
-                  return 'O telefone é obrigatório';
-                } else if (!regex.hasMatch(cleaned)) {
-                  return 'Número de telefone inválido';
-                }
-                return null;
-              },
-
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(11),
-              ],
             ),
-            widget.origin == WhoCall.campaignDetails
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Opacity(
-                      opacity: 0.9,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xFFfff3cd),
-                          border: Border.all(
-                            color: Color(0xFFFFE69C),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 4,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.info_outline, size: 12),
-                            SizedBox(width: 5),
-                            Text(
-                              'Informe seu telefone para continuar.',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Telefone',
+                  style: TextStyle(
+                    color: Color(0xFF212b36),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                    height: 2.2,
+                  ),
+                ),
+                TextFormField(
+                  controller: _phoneController,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    prefixIconConstraints: const BoxConstraints(
+                      minWidth: 40,
+                      maxHeight: 25,
+                    ),
+                    prefixIcon: const Icon(FontAwesomeIcons.whatsapp, size: 18),
+                    hintText: '(__) _____-____',
+                    hintStyle: const TextStyle(fontSize: 16),
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 6,
+                      horizontal: 12,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: Colors.grey.shade300,
+                        width: 1.5,
                       ),
                     ),
-                  )
-                : Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'Criar uma conta',
-                        style: TextStyle(
-                          color: Color(0xFF454f5b),
-                          decoration: TextDecoration.underline,
-                        ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: Colors.blueAccent,
+                        width: 3.0,
                       ),
                     ),
                   ),
+                  validator: (value) {
+                    String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
+
+                    RegExp regex = RegExp(r'^\d{10,11}$');
+
+                    if (cleaned == null || cleaned.isEmpty) {
+                      return 'O telefone é obrigatório';
+                    } else if (!regex.hasMatch(cleaned)) {
+                      return 'Número de telefone inválido';
+                    }
+                    return null;
+                  },
+
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                    LengthLimitingTextInputFormatter(11),
+                  ],
+                ),
+              ],
+            ),
+            // widget.origin == WhoCall.campaignDetails
+            //     ? Padding(
+            //         padding: const EdgeInsets.symmetric(vertical: 10),
+            //         child: Opacity(
+            //           opacity: 0.9,
+            //           child: Container(
+            //             decoration: BoxDecoration(
+            //               color: Color(0xFFfff3cd),
+            //               border: Border.all(
+            //                 color: Color(0xFFFFE69C),
+            //                 width: 1,
+            //               ),
+            //               borderRadius: BorderRadius.circular(5),
+            //             ),
+            //             padding: EdgeInsets.symmetric(
+            //               horizontal: 5,
+            //               vertical: 4,
+            //             ),
+            //             child: Row(
+            //               children: [
+            //                 Icon(Icons.info_outline, size: 12),
+            //                 SizedBox(width: 5),
+            //                 Text(
+            //                   'Informe seu telefone para continuar.',
+            //                   style: TextStyle(fontSize: 12),
+            //                 ),
+            //               ],
+            //             ),
+            //           ),
+            //         ),
+            //       )
+            //     : Align(
+            //         alignment: Alignment.centerRight,
+            //         child: TextButton(
+            //           style: TextButton.styleFrom(
+            //             minimumSize: Size.zero,
+            //             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            //           ),
+            //           onPressed: () {},
+            //           child: Text(
+            //             'Criar uma conta',
+            //             style: TextStyle(
+            //               color: Color(0xFF454f5b),
+            //               decoration: TextDecoration.underline,
+            //             ),
+            //           ),
+            //         ),
+            //       ),
             SizedBox(
               width: double.infinity,
               height: 32,

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
+import 'package:new_mg_app/components/register_modal_component.dart';
+import 'package:new_mg_app/components/search_purchases_modal_component.dart';
 import 'package:new_mg_app/providers/auth_provider.dart';
 
 class MenuItem {
   final String title;
   final IconData icon;
-  final String routeName;
+  final String? routeName;
+  final VoidCallback? onTap;
 
-  MenuItem(this.title, this.icon, this.routeName);
+  MenuItem(this.title, this.icon, {this.routeName, this.onTap});
 }
+
 
 class NavigationModalComponent extends ConsumerWidget {
   const NavigationModalComponent({super.key});
@@ -20,19 +24,19 @@ class NavigationModalComponent extends ConsumerWidget {
     final bool isLogged = client != null;
 
     final List<MenuItem> menuItems = [
-      MenuItem('Início', Icons.home_outlined, '/'),
-      MenuItem('Afiliados', Icons.list_alt, '/afiliados'),
-      MenuItem('Campanhas', Icons.list_alt, '/campanhas'),
-      MenuItem('Comunicados', Icons.calendar_view_month, '/rota'),
-      MenuItem('Meus títulos', Icons.whatshot, '/rota'),
-      MenuItem('Cadastro', Icons.account_circle_outlined, '/rota'),
-      MenuItem('Ganhadores', Icons.emoji_events_outlined, '/rota'),
-      MenuItem('Meus giros', Icons.format_list_bulleted, ''),
-      MenuItem('Raspadinhas', Icons.format_list_bulleted, '/rota'),
-      MenuItem('Minhas caixas', Icons.format_list_bulleted, '/rota'),
-      MenuItem('Meu caça-níquel', Icons.format_list_bulleted, '/rota'),
-      MenuItem('Termos de uso', Icons.description, '/rota'),
-      MenuItem('Entrar em contato', Icons.mail_outline, '/rota'),
+      MenuItem('Início', Icons.home_outlined, routeName: '/'),
+      MenuItem('Afiliados', Icons.list_alt, routeName: '/afiliados'),
+      MenuItem('Campanhas', Icons.list_alt, routeName: '/campaigns'),
+      MenuItem('Comunicados', Icons.calendar_view_month, routeName: '/rota'),
+      MenuItem('Meus títulos', Icons.whatshot, routeName: '/rota'),
+      MenuItem('Cadastro', Icons.account_circle_outlined, onTap: () => RegisterModalComponent.show(context, WhoCall.navigationModal)),
+      MenuItem('Ganhadores', Icons.emoji_events_outlined, routeName: '/rota'),
+      MenuItem('Meus giros', Icons.format_list_bulleted, onTap: () => SearchPurchasesModalComponent.show(context, WhoCall.navigationModal)),
+      MenuItem('Raspadinhas', Icons.format_list_bulleted, routeName: '/rota'),
+      MenuItem('Minhas caixas', Icons.format_list_bulleted, routeName: '/rota'),
+      MenuItem('Meu caça-níquel', Icons.format_list_bulleted, routeName: '/rota'),
+      MenuItem('Termos de uso', Icons.description, routeName: '/rota'),
+      MenuItem('Entrar em contato', Icons.mail_outline, routeName: '/rota'),
     ];
 
     return Scaffold(
@@ -93,7 +97,11 @@ class NavigationModalComponent extends ConsumerWidget {
                     ),
                     onTap: () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, menuItems[index].routeName);
+                      if (menuItems[index].onTap != null) {
+                        menuItems[index].onTap!();
+                      } else if (menuItems[index].routeName != null && menuItems[index].routeName!.isNotEmpty) {
+                        Navigator.pushNamed(context, menuItems[index].routeName!);
+                      }
                     },
                   );
                 },
