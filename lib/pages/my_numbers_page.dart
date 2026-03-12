@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/custom_top_bar_component.dart';
 import 'package:new_mg_app/components/my_number_card_component.dart';
+import 'package:new_mg_app/components/search_purchases_modal_component.dart';
+import 'package:new_mg_app/constants/enums.dart';
 
 class MyNumbersPage extends StatelessWidget {
   const MyNumbersPage({super.key});
@@ -32,7 +34,9 @@ class MyNumbersPage extends StatelessWidget {
                     ),
                     const Spacer(),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        SearchPurchasesModalComponent.show(context, WhoCall.myNumbersPage);
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF0D6EFD),
                         foregroundColor: Colors.white,

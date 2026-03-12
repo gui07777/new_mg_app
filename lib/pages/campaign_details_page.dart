@@ -5,6 +5,7 @@ import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
 import 'package:new_mg_app/components/campaign_app_bar_component.dart';
 import 'package:new_mg_app/components/register_modal_component.dart';
+import 'package:new_mg_app/constants/enums.dart';
 
 class CampaignDetailsPage extends StatefulWidget {
   final String imageUrl;

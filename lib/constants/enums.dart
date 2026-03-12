@@ -1,1 +1,9 @@
-enum WhoCall { navigationModal, customTopBar, campaignDetails, campaignAppBar }
+enum WhoCall {
+  navigationModal,
+  customTopBar,
+  campaignDetails,
+  campaignAppBar,
+  registerModalComponent,
+  loginModalComponent,
+  myNumbersPage
+}

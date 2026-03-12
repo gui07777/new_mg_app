@@ -4,12 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_mg_app/components/register_modal_component.dart';
 import 'package:new_mg_app/config/dio_client.dart';
+import 'package:new_mg_app/constants/enums.dart';
 import 'package:new_mg_app/pages/my_numbers_page.dart';
 import 'package:new_mg_app/providers/auth_provider.dart';
 import 'package:new_mg_app/services/client_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
 
 class LoginModalComponent extends ConsumerStatefulWidget {
   final WhoCall origin;
@@ -41,15 +40,17 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
   bool phoneBrl = true;
 
   String getMessage() {
-    switch (widget.origin) {
-      case WhoCall.navigationModal:
-        return LoginModalComponent.messages[0];
-      case WhoCall.customTopBar:
-        return LoginModalComponent.messages[1];
-      case WhoCall.campaignDetails:
-        return LoginModalComponent.messages[2];
-      case WhoCall.campaignAppBar:
-        return LoginModalComponent.messages[1];
+    if (widget.origin == WhoCall.navigationModal ||
+        widget.origin == WhoCall.registerModalComponent) {
+      return LoginModalComponent.messages[0];
+    } else if (widget.origin == WhoCall.customTopBar) {
+      return LoginModalComponent.messages[1];
+    } else if (widget.origin == WhoCall.campaignDetails) {
+      return LoginModalComponent.messages[2];
+    } else if (widget.origin == WhoCall.campaignAppBar) {
+      return LoginModalComponent.messages[1];
+    } else {
+      return 'Mensagem não disponível';
     }
   }
 
@@ -101,7 +102,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
             widget.origin == WhoCall.campaignDetails
                 ? Text(
                     'Informe seu telefone',
-                    
+
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
@@ -194,12 +195,19 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        RegisterModalComponent.show(
+                          context,
+                          WhoCall.loginModalComponent,
+                        );
+                      },
                       child: Text(
                         'Criar uma conta',
                         style: TextStyle(
                           color: Color(0xFF454f5b),
                           decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),

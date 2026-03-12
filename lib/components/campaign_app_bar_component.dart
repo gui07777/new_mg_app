@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/get_it_now_animation_component.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/register_modal_component.dart';
+import 'package:new_mg_app/constants/enums.dart';
 
 class CampaignAppBarComponent extends StatelessWidget {
   final String imageUrl;

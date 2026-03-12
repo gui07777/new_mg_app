@@ -2,22 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:new_mg_app/components/login_modal_component.dart';
+import 'package:new_mg_app/components/register_modal_component.dart';
 import 'package:new_mg_app/config/dio_client.dart';
+import 'package:new_mg_app/constants/enums.dart';
 import 'package:new_mg_app/pages/my_numbers_page.dart';
 import 'package:new_mg_app/providers/auth_provider.dart';
 import 'package:new_mg_app/services/client_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum WhoCall { navigationModal, customTopBar, campaignDetails, campaignAppBar }
 
 class RegisterModalComponent extends ConsumerStatefulWidget {
   final WhoCall origin;
-
-  static const List<String> messages = [
-    'Digite o número de telefone usado na hora da compra:',
-    'Por favor, entre com seus dados ou faça um cadastro',
-    '5 unidade(s) do produto RASPADINHA', //quantidade e produto mocados
-  ];
 
   const RegisterModalComponent({super.key, required this.origin});
 
@@ -37,26 +33,16 @@ class RegisterModalComponent extends ConsumerStatefulWidget {
 
 class _RegisterModalComponentState
     extends ConsumerState<RegisterModalComponent> {
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _socialNameController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _birthDateController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _confirmPhoneController = TextEditingController();
   bool phoneBrl = true;
-
-  String getMessage() {
-    switch (widget.origin) {
-      case WhoCall.navigationModal:
-        return RegisterModalComponent.messages[0];
-      case WhoCall.customTopBar:
-        return RegisterModalComponent.messages[1];
-      case WhoCall.campaignDetails:
-        return RegisterModalComponent.messages[2];
-      case WhoCall.campaignAppBar:
-        return RegisterModalComponent.messages[1];
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    final String messageToShow = getMessage();
-
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
@@ -93,22 +79,11 @@ class _RegisterModalComponentState
             Opacity(
               opacity: 0.9,
               child: Text(
-                messageToShow,
+                'Preencha os campos abaixo:',
                 style: TextStyle(color: Color(0xFF495057)),
               ),
             ),
             SizedBox(height: 10),
-            widget.origin == WhoCall.campaignDetails
-                ? Text(
-                    'Informe seu telefone',
-
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF212b36),
-                    ),
-                  )
-                : Container(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -118,11 +93,11 @@ class _RegisterModalComponentState
                     color: Color(0xFF212b36),
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    height: 2.2,
+                    height: 2.5,
                   ),
                 ),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: _fullNameController,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -152,22 +127,10 @@ class _RegisterModalComponentState
                     ),
                   ),
                   validator: (value) {
-                    String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
-
-                    RegExp regex = RegExp(r'^\d{10,11}$');
-
-                    if (cleaned == null || cleaned.isEmpty) {
-                      return 'O telefone é obrigatório';
-                    } else if (!regex.hasMatch(cleaned)) {
-                      return 'Número de telefone inválido';
+                    if (_fullNameController.text.isEmpty) {
+                      return 'O nome é obrigatório';
                     }
-                    return null;
                   },
-
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(11),
-                  ],
                 ),
               ],
             ),
@@ -180,11 +143,11 @@ class _RegisterModalComponentState
                     color: Color(0xFF212b36),
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    height: 2.2,
+                    height: 2.5,
                   ),
                 ),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: _socialNameController,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -214,22 +177,10 @@ class _RegisterModalComponentState
                     ),
                   ),
                   validator: (value) {
-                    String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
-
-                    RegExp regex = RegExp(r'^\d{10,11}$');
-
-                    if (cleaned == null || cleaned.isEmpty) {
-                      return 'O telefone é obrigatório';
-                    } else if (!regex.hasMatch(cleaned)) {
-                      return 'Número de telefone inválido';
+                    if (_socialNameController.text.isEmpty) {
+                      return 'O nome social é obrigatório';
                     }
-                    return null;
                   },
-
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(11),
-                  ],
                 ),
               ],
             ),
@@ -242,11 +193,11 @@ class _RegisterModalComponentState
                     color: Color(0xFF212b36),
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    height: 2.2,
+                    height: 2.5,
                   ),
                 ),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: _cpfController,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -278,12 +229,12 @@ class _RegisterModalComponentState
                   validator: (value) {
                     String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
 
-                    RegExp regex = RegExp(r'^\d{10,11}$');
+                    RegExp regex = RegExp(r'^\d{11}$');
 
                     if (cleaned == null || cleaned.isEmpty) {
-                      return 'O telefone é obrigatório';
+                      return 'O CPF é obrigatório';
                     } else if (!regex.hasMatch(cleaned)) {
-                      return 'Número de telefone inválido';
+                      return 'Número de CPF inválido';
                     }
                     return null;
                   },
@@ -304,11 +255,11 @@ class _RegisterModalComponentState
                     color: Color(0xFF212b36),
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    height: 2.2,
+                    height: 2.5,
                   ),
                 ),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: _birthDateController,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -340,19 +291,19 @@ class _RegisterModalComponentState
                   validator: (value) {
                     String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
 
-                    RegExp regex = RegExp(r'^\d{10,11}$');
+                    RegExp regex = RegExp(r'^\d{8}$');
 
                     if (cleaned == null || cleaned.isEmpty) {
-                      return 'O telefone é obrigatório';
+                      return 'A data de nascimento é obrigatória';
                     } else if (!regex.hasMatch(cleaned)) {
-                      return 'Número de telefone inválido';
+                      return 'Data de nascimento inválida';
                     }
                     return null;
                   },
 
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
-                    LengthLimitingTextInputFormatter(11),
+                    LengthLimitingTextInputFormatter(8),
                   ],
                 ),
               ],
@@ -366,7 +317,7 @@ class _RegisterModalComponentState
                     color: Color(0xFF212b36),
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    height: 2.2,
+                    height: 2.5,
                   ),
                 ),
                 TextFormField(
@@ -433,11 +384,11 @@ class _RegisterModalComponentState
                     color: Color(0xFF212b36),
                     fontWeight: FontWeight.w600,
                     fontSize: 13,
-                    height: 2.2,
+                    height: 2.5,
                   ),
                 ),
                 TextFormField(
-                  controller: _phoneController,
+                  controller: _confirmPhoneController,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
@@ -491,58 +442,30 @@ class _RegisterModalComponentState
                 ),
               ],
             ),
-            widget.origin == WhoCall.campaignDetails
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: Opacity(
-                      opacity: 0.9,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Color(0xFFfff3cd),
-                          border: Border.all(
-                            color: Color(0xFFFFE69C),
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 5,
-                          vertical: 4,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.info_outline, size: 12),
-                            SizedBox(width: 5),
-                            Text(
-                              'Informe seu telefone para continuar.',
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  )
-                : Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        minimumSize: Size.zero,
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      onPressed: () {},
-                      child: Text(
-                        'Já possuo uma conta',
-                        style: TextStyle(
-                          color: Color(0xFF454f5b),
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  LoginModalComponent.show(context, WhoCall.registerModalComponent);
+                },
+                child: Text(
+                  'Já possuo uma conta',
+                  style: TextStyle(
+                    color: Color(0xFF454f5b),
+                    decoration: TextDecoration.underline,
+                    fontWeight: FontWeight.w600
                   ),
+                ),
+              ),
+            ),
             Text(
               'Ao clicar em finalizar, você está de acordo com o regulamento do sorteio.',
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12)
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
             ),
             SizedBox(height: 12),
             SizedBox(
