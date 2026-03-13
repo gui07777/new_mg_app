@@ -32,10 +32,10 @@ class NavigationModalComponent extends ConsumerWidget {
       MenuItem('Meus títulos', Icons.whatshot, routeName: '/my-numbers'),
       MenuItem('Cadastro', Icons.account_circle_outlined, onTap: () => RegisterModalComponent.show(context, WhoCall.navigationModal)),
       MenuItem('Ganhadores', Icons.emoji_events_outlined, routeName: '/'),
-      MenuItem('Meus giros', Icons.format_list_bulleted, onTap: () => SearchPurchasesModalComponent.show(context, WhoCall.navigationModal)),
+      MenuItem('Meus giros', Icons.format_list_bulleted, routeName: '/award-roulette'),
       MenuItem('Raspadinhas', Icons.format_list_bulleted, routeName: '/'),
-      MenuItem('Minhas caixas', Icons.format_list_bulleted, routeName: '/'),
-      MenuItem('Meu caça-níquel', Icons.format_list_bulleted, routeName: '/'),
+      MenuItem('Minhas caixas', Icons.format_list_bulleted, routeName: '/my-box'),
+      MenuItem('Meu caça-níquel', Icons.format_list_bulleted, routeName: '/award-casino'),
       MenuItem('Termos de uso', Icons.description, routeName: '/'),
       MenuItem('Entrar em contato', Icons.mail_outline, routeName: '/'),
     ];

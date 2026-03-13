@@ -11,7 +11,6 @@ import 'package:new_mg_app/providers/auth_provider.dart';
 import 'package:new_mg_app/services/client_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-
 class RegisterModalComponent extends ConsumerStatefulWidget {
   final WhoCall origin;
 
@@ -44,6 +43,7 @@ class _RegisterModalComponentState
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.white,
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       constraints: BoxConstraints(
@@ -451,14 +451,17 @@ class _RegisterModalComponentState
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  LoginModalComponent.show(context, WhoCall.registerModalComponent);
+                  LoginModalComponent.show(
+                    context,
+                    WhoCall.registerModalComponent,
+                  );
                 },
                 child: Text(
                   'Já possuo uma conta',
                   style: TextStyle(
                     color: Color(0xFF454f5b),
                     decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.w600
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),

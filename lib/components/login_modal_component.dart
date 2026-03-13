@@ -59,6 +59,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
     final String messageToShow = getMessage();
 
     return Dialog(
+      backgroundColor: Colors.white,
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       constraints: BoxConstraints(

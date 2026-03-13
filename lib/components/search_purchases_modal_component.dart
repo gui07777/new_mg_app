@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:new_mg_app/components/select_draw_component.dart';
 import 'package:new_mg_app/constants/enums.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,11 +28,11 @@ class _SearchPurchasesModalComponentState
     extends ConsumerState<SearchPurchasesModalComponent> {
   final TextEditingController _phoneController = TextEditingController();
   bool phoneBrl = true;
-  final List<String> opcoes = ['Opção 1', 'Opção 2', 'Opção 3'];
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.white,
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
       constraints: BoxConstraints(
@@ -65,28 +66,7 @@ class _SearchPurchasesModalComponentState
             ),
             Divider(),
             SizedBox(height: 10),
-            Text(
-              'Selecione o sorteio',
-              style: TextStyle(
-                color: Color(0xFF454f5b),
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
-                height: 2.2,
-              ),
-            ),
-            DropdownButton<String>(
-              hint: Text('Guilherme'), // Placeholder
-              items: opcoes.map((String opcao) {
-                return DropdownMenuItem<String>(
-                  value: opcao,
-                  child: Text(opcao),
-                );
-              }).toList(),
-              onChanged: (String? novoValor) {
-                setState(() {
-                });
-              },
-            ),
+            SelectDrawComponent(),
             Text(
               'Telefone',
               style: TextStyle(
@@ -195,6 +175,7 @@ class _SearchPurchasesModalComponentState
                   ),
                 ),
               ),
+            SizedBox(height: 14),
           ],
         ),
       ),
