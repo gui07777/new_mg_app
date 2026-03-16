@@ -53,6 +53,7 @@ class _CarouselCampaignState extends State<CarouselCampaignComponent> {
                             i,
                             fit: BoxFit.fill,
                             height: 350,
+                            cacheWidth: 300
                           ),
                         ),
                       );

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/get_it_now_animation_component.dart';
 import 'package:new_mg_app/pages/campaign_details_page.dart';
 
-class CampaignCardsComponent extends StatefulWidget {
+class LinkCopyCampaignsComponent extends StatefulWidget {
   final String titulo, data, valor;
 
-  const CampaignCardsComponent({
+  const LinkCopyCampaignsComponent({
     super.key,
     required this.titulo,
     required this.data,
@@ -13,10 +13,12 @@ class CampaignCardsComponent extends StatefulWidget {
   });
 
   @override
-  State<CampaignCardsComponent> createState() => _CampaignCardsState();
+  State<LinkCopyCampaignsComponent> createState() =>
+      _LinkCopyCampaignsComponentState();
 }
 
-class _CampaignCardsState extends State<CampaignCardsComponent> {
+class _LinkCopyCampaignsComponentState
+    extends State<LinkCopyCampaignsComponent> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,7 +59,7 @@ class _CampaignCardsState extends State<CampaignCardsComponent> {
                   width: 85,
                   height: 95,
                   fit: BoxFit.cover,
-                  cacheWidth: 300
+                  cacheWidth: 300,
                 ),
               ),
               const SizedBox(width: 12),
@@ -89,7 +91,7 @@ class _CampaignCardsState extends State<CampaignCardsComponent> {
                             ),
                           ),
                           const SizedBox(height: 6),
-                          GetItNowAnimationComponent()
+                          GetItNowAnimationComponent(),
                         ],
                       ),
                       Row(

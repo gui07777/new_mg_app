@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
-import 'package:new_mg_app/components/register_modal_component.dart';
 import 'package:new_mg_app/config/dio_client.dart';
 import 'package:new_mg_app/constants/enums.dart';
 import 'package:new_mg_app/pages/my_numbers_page.dart';
@@ -130,6 +129,7 @@ class _RegisterModalComponentState
                     if (_fullNameController.text.isEmpty) {
                       return 'O nome é obrigatório';
                     }
+                    return null;
                   },
                 ),
               ],
@@ -180,6 +180,7 @@ class _RegisterModalComponentState
                     if (_socialNameController.text.isEmpty) {
                       return 'O nome social é obrigatório';
                     }
+                    return null;
                   },
                 ),
               ],

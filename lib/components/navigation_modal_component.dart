@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/register_modal_component.dart';
-import 'package:new_mg_app/components/search_purchases_modal_component.dart';
 import 'package:new_mg_app/constants/enums.dart';
 import 'package:new_mg_app/providers/auth_provider.dart';
 

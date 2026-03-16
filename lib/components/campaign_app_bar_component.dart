@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/get_it_now_animation_component.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
-import 'package:new_mg_app/components/register_modal_component.dart';
 import 'package:new_mg_app/constants/enums.dart';
 
 class CampaignAppBarComponent extends StatelessWidget {
@@ -63,7 +62,7 @@ class CampaignAppBarComponent extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(imageUrl, fit: BoxFit.cover),
+            Image.network(imageUrl, fit: BoxFit.cover, cacheWidth: 300),
             const DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(

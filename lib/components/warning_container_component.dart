@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class WarningContainerComponent extends StatelessWidget {
-  WarningContainerComponent({super.key, required this.information});
+  const WarningContainerComponent({super.key, required this.information});
   final String information;
 
   @override

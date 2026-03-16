@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BlackContainerInformationComponent extends StatelessWidget {
-  BlackContainerInformationComponent({super.key, required this.information});
+  const BlackContainerInformationComponent({super.key, required this.information});
   final String information;
 
   @override
