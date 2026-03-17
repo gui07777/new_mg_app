@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/custom_top_bar_component.dart';
+import 'package:new_mg_app/components/link_copy_campaigns_component.dart';
 import 'package:new_mg_app/components/tab_bar_items_component.dart';
 
 class AffiliatePage extends StatelessWidget {
@@ -108,7 +109,25 @@ class AffiliatePage extends StatelessWidget {
                       'R\$ 0',
                       'Valor disponível para saque',
                     ),
-                    TabBarItemsComponent()
+                    TabBarItemsComponent(),
+                  ],
+                ),
+              ),
+
+              SliverFillRemaining(
+                hasScrollBody: true,
+                child: TabBarView(
+                  children: [
+                    ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        LinkCopyCampaignsComponent(
+                          titulo: 'teste mocado',
+                          data: '12/12/2012',
+                          valor: 'R\$ 13,00',
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
