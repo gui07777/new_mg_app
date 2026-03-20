@@ -104,7 +104,7 @@ class CustomTopBarComponent extends StatelessWidget {
                       if (logged) {
                         Navigator.pushNamed(context, '/my-numbers');
                       } else {
-                        LoginModalComponent.show(context, WhoCall.customTopBar);
+                        LoginModalComponent.show(context, WhoCall.customTopBarComponent);
                       }
                     },
                     child: const Text(

@@ -5,7 +5,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_mg_app/components/register_modal_component.dart';
 import 'package:new_mg_app/config/dio_client.dart';
 import 'package:new_mg_app/constants/enums.dart';
+import 'package:new_mg_app/pages/affiliate_page.dart';
+import 'package:new_mg_app/pages/award_casino_page.dart';
+import 'package:new_mg_app/pages/award_roulette_page.dart';
+import 'package:new_mg_app/pages/my_box_page.dart';
 import 'package:new_mg_app/pages/my_numbers_page.dart';
+import 'package:new_mg_app/pages/scratch_card_page.dart';
 import 'package:new_mg_app/providers/auth_provider.dart';
 import 'package:new_mg_app/services/client_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,17 +45,84 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
   bool phoneBrl = true;
 
   String getMessage() {
-    if (widget.origin == WhoCall.navigationModal ||
+    if (widget.origin == WhoCall.navigationModalComponent ||
         widget.origin == WhoCall.registerModalComponent) {
       return LoginModalComponent.messages[0];
-    } else if (widget.origin == WhoCall.customTopBar) {
+    } else if (widget.origin == WhoCall.customTopBarComponent) {
       return LoginModalComponent.messages[1];
-    } else if (widget.origin == WhoCall.campaignDetails) {
+    } else if (widget.origin == WhoCall.campaignDetailsPage) {
       return LoginModalComponent.messages[2];
-    } else if (widget.origin == WhoCall.campaignAppBar) {
+    } else if (widget.origin == WhoCall.campaignAppBarComponent) {
       return LoginModalComponent.messages[1];
     } else {
       return 'Mensagem não disponível';
+    }
+  }
+
+  Future<void> _sendAuthentication() async {
+    String phone = _phoneController.text;
+    const storage = FlutterSecureStorage();
+
+    try {
+      if (phone.isNotEmpty) {
+        final clientService = ClientService(DioClient());
+
+        final authDataByPhone = await clientService.authenticateClient(phone);
+
+        await storage.write(key: 'token', value: authDataByPhone!.accessToken);
+
+        final client = await clientService.getClientByAuthenticated();
+
+        if (client.phone.length > 11) {
+          client.phoneBrl = false;
+        } else {
+          client.phoneBrl = true;
+        }
+
+        ref.read(authProvider.notifier).setUser(client);
+
+        if (mounted && widget.origin == WhoCall.navigationModalComponent) {
+          Navigator.pop(context);
+        } else if (widget.origin == WhoCall.customTopBarComponent ||
+            widget.origin == WhoCall.campaignAppBarComponent) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyNumbersPage()),
+          );
+        } else if (widget.origin == WhoCall.affiliateButton) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AffiliatePage()),
+          );
+        } else if (widget.origin == WhoCall.myNumbersButton) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyNumbersPage()),
+          );
+        } else if (widget.origin == WhoCall.awardRouletteButton) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AwardRoulettePage()),
+          );
+        } else if (widget.origin == WhoCall.myBoxButton) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MyBoxPage()),
+          );
+        } else if (widget.origin == WhoCall.awardCasinoButton) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AwardCasinoPage()),
+          );
+        } else if (widget.origin == WhoCall.scratchCardButton) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ScratchCardPage()),
+          );
+        }
+      }
+    } on Exception catch (e) {
+      throw Exception('Erro $e');
     }
   }
 
@@ -100,7 +172,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
               ),
             ),
             SizedBox(height: 10),
-            widget.origin == WhoCall.campaignDetails
+            widget.origin == WhoCall.campaignDetailsPage
                 ? Text(
                     'Informe seu telefone',
 
@@ -158,7 +230,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
                 LengthLimitingTextInputFormatter(11),
               ],
             ),
-            widget.origin == WhoCall.campaignDetails
+            widget.origin == WhoCall.campaignDetailsPage
                 ? Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Opacity(
@@ -223,47 +295,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                onPressed: () async {
-                  String phone = _phoneController.text;
-                  const storage = FlutterSecureStorage();
-
-                  if (phone.isNotEmpty) {
-                    final clientService = ClientService(DioClient());
-
-                    final authDataByPhone = await clientService
-                        .authenticateClient(phone);
-
-                    await storage.write(
-                      key: 'token',
-                      value: authDataByPhone!.accessToken,
-                    );
-
-                    final client = await clientService
-                        .getClientByAuthenticated();
-
-                    if (client.phone.length > 11) {
-                      client.phoneBrl = false;
-                    } else {
-                      client.phoneBrl = true;
-                    }
-
-                    ref.read(authProvider.notifier).setUser(client);
-
-                    if (mounted && widget.origin == WhoCall.navigationModal) {
-                      Navigator.pop(context);
-                    } else if (widget.origin == WhoCall.customTopBar ||
-                        widget.origin == WhoCall.campaignAppBar) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyNumbersPage(),
-                        ),
-                      );
-                    } else if (widget.origin == WhoCall.campaignDetails) {
-                      // rota indefinida
-                    }
-                  }
-                },
+                onPressed: _sendAuthentication,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

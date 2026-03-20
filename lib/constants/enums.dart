@@ -1,9 +1,20 @@
 enum WhoCall {
-  navigationModal,
-  customTopBar,
-  campaignDetails,
-  campaignAppBar,
+  // components
+  navigationModalComponent,
+  customTopBarComponent,
+  campaignAppBarComponent,
   registerModalComponent,
   loginModalComponent,
-  myNumbersPage
+
+  // pages
+  myNumbersPage,
+  campaignDetailsPage,
+
+  // buttons
+  affiliateButton,
+  myNumbersButton,
+  awardRouletteButton,
+  awardCasinoButton,
+  myBoxButton,
+  scratchCardButton,
 }

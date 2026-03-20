@@ -24,7 +24,7 @@ class AffiliatePage extends StatelessWidget {
                       child: Column(
                         children: [
                           _buildHeaderTitle(),
-                          Divider(),
+                          Divider(height: 0),
                           _buildAffiliateCodeCard(),
                           _buildColorfulContainers(
                             Color(0xFFFFA726),
@@ -179,7 +179,7 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   _SliverAppBarDelegate(this.child);
 
   @override
-  double get minExtent => 48; // Altura da sua TabBar
+  double get minExtent => 48;
   @override
   double get maxExtent => 48;
 

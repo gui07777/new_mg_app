@@ -3,6 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/register_modal_component.dart';
 import 'package:new_mg_app/constants/enums.dart';
+import 'package:new_mg_app/pages/affiliate_page.dart';
+import 'package:new_mg_app/pages/award_casino_page.dart';
+import 'package:new_mg_app/pages/award_roulette_page.dart';
+import 'package:new_mg_app/pages/campaigns_page.dart';
+import 'package:new_mg_app/pages/my_box_page.dart';
+import 'package:new_mg_app/pages/my_numbers_page.dart';
+import 'package:new_mg_app/pages/scratch_card_page.dart';
 import 'package:new_mg_app/providers/auth_provider.dart';
 
 class MenuItem {
@@ -10,10 +17,16 @@ class MenuItem {
   final IconData icon;
   final String? routeName;
   final VoidCallback? onTap;
+  final Widget? destinationPage;
 
-  MenuItem(this.title, this.icon, {this.routeName, this.onTap});
+  MenuItem(
+    this.title,
+    this.icon, {
+    this.routeName,
+    this.onTap,
+    this.destinationPage,
+  });
 }
-
 
 class NavigationModalComponent extends ConsumerWidget {
   const NavigationModalComponent({super.key});
@@ -25,16 +38,66 @@ class NavigationModalComponent extends ConsumerWidget {
 
     final List<MenuItem> menuItems = [
       MenuItem('Início', Icons.home_outlined, routeName: '/'),
-      MenuItem('Afiliados', Icons.list_alt, routeName: '/affiliate'),
-      MenuItem('Campanhas', Icons.list_alt, routeName: '/campaigns'),
+      MenuItem(
+        'Afiliados',
+        Icons.list_alt,
+        onTap: () => LoginModalComponent.show(context, WhoCall.affiliateButton),
+        destinationPage: AffiliatePage(),
+      ),
+      MenuItem(
+        'Campanhas',
+        Icons.list_alt,
+        routeName: '/campaigns',
+        destinationPage: CampaignsPage(),
+      ),
       MenuItem('Comunicados', Icons.calendar_view_month, routeName: '/'),
-      MenuItem('Meus títulos', Icons.whatshot, routeName: '/my-numbers'),
-      MenuItem('Cadastro', Icons.account_circle_outlined, onTap: () => RegisterModalComponent.show(context, WhoCall.navigationModal)),
-      MenuItem('Ganhadores', Icons.emoji_events_outlined, routeName: '/'),
-      MenuItem('Meus giros', Icons.format_list_bulleted, routeName: '/award-roulette'),
-      MenuItem('Raspadinhas', Icons.format_list_bulleted, routeName: '/'),
-      MenuItem('Minhas caixas', Icons.format_list_bulleted, routeName: '/my-box'),
-      MenuItem('Meu caça-níquel', Icons.format_list_bulleted, routeName: '/award-casino'),
+      MenuItem(
+        'Meus títulos',
+        Icons.whatshot,
+        onTap: () => LoginModalComponent.show(context, WhoCall.myNumbersButton),
+        destinationPage: MyNumbersPage(),
+      ),
+      MenuItem(
+        'Cadastro',
+        Icons.account_circle_outlined,
+        onTap: () => RegisterModalComponent.show(
+          context,
+          WhoCall.navigationModalComponent,
+        ),
+      ),
+      MenuItem(
+        'Ganhadores',
+        Icons.emoji_events_outlined,
+        routeName: '/campaigns',
+        destinationPage: CampaignsPage(),
+      ),
+      MenuItem(
+        'Meus giros',
+        Icons.format_list_bulleted,
+        onTap: () =>
+            LoginModalComponent.show(context, WhoCall.awardRouletteButton),
+        destinationPage: AwardRoulettePage(),
+      ),
+      MenuItem(
+        'Raspadinhas',
+        Icons.format_list_bulleted,
+        onTap: () =>
+            LoginModalComponent.show(context, WhoCall.scratchCardButton),
+            destinationPage: ScratchCardPage()
+      ),
+      MenuItem(
+        'Minhas caixas',
+        Icons.format_list_bulleted,
+        onTap: () => LoginModalComponent.show(context, WhoCall.myBoxButton),
+        destinationPage: MyBoxPage(),
+      ),
+      MenuItem(
+        'Meu caça-níquel',
+        Icons.format_list_bulleted,
+        onTap: () =>
+            LoginModalComponent.show(context, WhoCall.awardCasinoButton),
+        destinationPage: AwardCasinoPage(),
+      ),
       MenuItem('Termos de uso', Icons.description, routeName: '/'),
       MenuItem('Entrar em contato', Icons.mail_outline, routeName: '/'),
     ];
@@ -96,13 +159,26 @@ class NavigationModalComponent extends ConsumerWidget {
                       ),
                     ),
                     onTap: () {
-                      final route = menuItems[item].routeName;
-                      final customCallBack = menuItems[item].onTap;
+                      final items = menuItems[item];
                       Navigator.pop(context);
-                      if (customCallBack != null) {
-                        customCallBack();
-                      } else if (route != null && route.isNotEmpty) {
-                        Navigator.pushNamed(context, route);
+
+                      if (isLogged) {
+                        if (items.destinationPage != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => items.destinationPage!,
+                            ),
+                          );
+                        } else if (items.routeName != null) {
+                          Navigator.pushNamed(context, items.routeName!);
+                        }
+                      } else {
+                        if (items.onTap != null) {
+                          items.onTap!();
+                        } else if (items.routeName != null) {
+                          Navigator.pushNamed(context, items.routeName!);
+                        }
                       }
                     },
                   );
@@ -125,7 +201,7 @@ class NavigationModalComponent extends ConsumerWidget {
                     if (!isLogged) {
                       LoginModalComponent.show(
                         context,
-                        WhoCall.navigationModal,
+                        WhoCall.navigationModalComponent,
                       );
                     } else {
                       ref.read(authProvider.notifier).logout();

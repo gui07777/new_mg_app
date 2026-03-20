@@ -30,7 +30,7 @@ class AwardRoulettePage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 40),
-                  BlackContainerInformationComponent(information: 'Gire a roleta e concorra a prêmios'),
+                  BlackContainerInformationComponent(information: 'Gire a roleta e concorra a prêmios exclusivos!'),
                   SizedBox(height: 10),
                   SelectDrawComponent(),
                   SizedBox(height: 15),

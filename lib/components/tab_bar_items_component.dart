@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:new_mg_app/components/link_copy_campaigns_component.dart';
 
 class TabBarItemsComponent extends StatelessWidget {
   const TabBarItemsComponent({super.key});

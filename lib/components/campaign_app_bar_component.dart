@@ -118,7 +118,7 @@ class CampaignAppBarComponent extends StatelessWidget {
               right: 0,
               child: InkWell(
                 onTap:() {
-                LoginModalComponent.show(context, WhoCall.campaignAppBar);
+                LoginModalComponent.show(context, WhoCall.campaignAppBarComponent);
                 },
                 child: Container(
                   height: 30,

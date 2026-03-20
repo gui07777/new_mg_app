@@ -508,17 +508,17 @@ class _RegisterModalComponentState
 
                     ref.read(authProvider.notifier).setUser(client);
 
-                    if (mounted && widget.origin == WhoCall.navigationModal) {
+                    if (mounted && widget.origin == WhoCall.navigationModalComponent) {
                       Navigator.pop(context);
-                    } else if (widget.origin == WhoCall.customTopBar ||
-                        widget.origin == WhoCall.campaignAppBar) {
+                    } else if (widget.origin == WhoCall.customTopBarComponent ||
+                        widget.origin == WhoCall.campaignAppBarComponent) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const MyNumbersPage(),
                         ),
                       );
-                    } else if (widget.origin == WhoCall.campaignDetails) {
+                    } else if (widget.origin == WhoCall.campaignDetailsPage) {
                       // rota indefinida
                     }
                   }

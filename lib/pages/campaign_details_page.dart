@@ -1,5 +1,6 @@
 import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/components/checkout_modal_component.dart';
 import 'package:new_mg_app/components/description_regulation_component.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
@@ -22,6 +23,24 @@ class CampaignDetailsPage extends StatefulWidget {
 
 class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
   int _quantity = 1;
+
+  void _openCheckoutModal(BuildContext context) {
+    showGeneralDialog(
+      context: context,
+      transitionDuration: const Duration(milliseconds: 400),
+      pageBuilder: (context, animation, secondaryAnimation) {
+        return const CheckoutModalComponent();
+      },
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: Tween(begin: const Offset(0, -1), end: Offset.zero).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          ),
+          child: child,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,10 +231,11 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                               ),
                             ),
                             onTap: () {
-                              LoginModalComponent.show(
-                                context,
-                                WhoCall.campaignDetails,
-                              );
+                              // LoginModalComponent.show(
+                              //   context,
+                              //   WhoCall.campaignDetailsPage,
+                              // );
+                              _openCheckoutModal(context);
                             },
                           ),
                         ),
