@@ -33,8 +33,9 @@ class NavigationModalComponent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final client = ref.watch(authProvider);
-    final bool isLogged = client != null;
+    final client = ref.watch(authProvider); // retorna o estado atual do provider (deslogado retorna null, logado retorna uma instância do ClientModel)
+    print('client: $client');
+    final bool isLogged = client != null; // define validação pra ver se o usuário ta logado
 
     final List<MenuItem> menuItems = [
       MenuItem('Início', Icons.home_outlined, routeName: '/'),

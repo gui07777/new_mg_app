@@ -2,10 +2,8 @@ import 'package:bootstrap_icons/bootstrap_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/checkout_modal_component.dart';
 import 'package:new_mg_app/components/description_regulation_component.dart';
-import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
 import 'package:new_mg_app/components/campaign_app_bar_component.dart';
-import 'package:new_mg_app/constants/enums.dart';
 
 class CampaignDetailsPage extends StatefulWidget {
   final String imageUrl;

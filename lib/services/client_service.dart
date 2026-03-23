@@ -17,7 +17,6 @@ class ClientService {
       );
       return AuthResponseModel.fromJson(response['data']);
     } catch (e) {
-      print('erro detalhado: $e');
       throw Exception('Erro na autenticação: $e');
     }
   }
@@ -25,7 +24,6 @@ class ClientService {
   Future<ClientModel> getClientByAuthenticated() async {
     try {
       final response = await _client.get('$apiUrl/authenticated');
-      print(response);
       return ClientModel.fromJson(response['data']);
     } catch (e) {
       throw Exception('Erro na autenticação: $e');

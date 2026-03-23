@@ -25,11 +25,15 @@ não houver simplesmente envia Content-Type: application/json
         onRequest: (options, handler) async {
           options.headers["Content-Type"] = "application/json";
 
-          String? token = await _storage.read(key: 'token');
+          if (options.headers['Authorization'] == null) {
+            String? token = await _storage.read(key: 'token');
 
-          if (token != null && token.isNotEmpty) {
-            options.headers['Authorization'] = 'Bearer $token';
+            if (token != null && token.isNotEmpty) {
+              options.headers['Authorization'] = 'Bearer $token';
+            }
           }
+
+          print(options.headers);
 
           return handler.next(options);
         },
@@ -42,11 +46,13 @@ não houver simplesmente envia Content-Type: application/json
   Future<dynamic> get(
     String endpoint, {
     Map<String, dynamic>? queryParameters,
+    Options? options,
   }) async {
     try {
       final response = await _dio.get(
         endpoint,
         queryParameters: queryParameters,
+        options: options,
       );
       return response.data;
     } catch (e) {

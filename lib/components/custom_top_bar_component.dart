@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
 import 'package:new_mg_app/constants/enums.dart';
+import 'package:new_mg_app/providers/auth_provider.dart';
 
-class CustomTopBarComponent extends StatelessWidget {
+class CustomTopBarComponent extends ConsumerWidget {
   const CustomTopBarComponent({super.key});
-
-  static bool logged = false;
 
   void _openMenu(BuildContext context) {
     showGeneralDialog(
@@ -27,7 +27,10 @@ class CustomTopBarComponent extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final client = ref.watch(authProvider);
+    final bool isLogged = client != null;
+
     return SliverAppBar(
       backgroundColor: Colors.black,
       pinned: true,
@@ -101,7 +104,7 @@ class CustomTopBarComponent extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: () {
-                      if (logged) {
+                      if (isLogged) {
                         Navigator.pushNamed(context, '/my-numbers');
                       } else {
                         LoginModalComponent.show(context, WhoCall.customTopBarComponent);
