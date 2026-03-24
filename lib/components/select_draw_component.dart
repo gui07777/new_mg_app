@@ -12,13 +12,15 @@ class SelectDrawComponent extends StatefulWidget {
 
 class _SelectDrawComponentState extends State<SelectDrawComponent> {
   List<CampaignModel> campaigns = [];
+  CampaignModel? selectedCampaign;
 
+  @override
   void initState() {
     super.initState();
-    _fillDrawSelect();
+    _loadCampaigns();
   }
 
-  Future<void> _fillDrawSelect() async {
+  Future<void> _loadCampaigns() async {
     try {
       final campaignService = CampaignService(DioClient());
       final dynamic result = await campaignService.list();
@@ -27,7 +29,7 @@ class _SelectDrawComponentState extends State<SelectDrawComponent> {
         campaigns = result;
       });
     } on Exception catch (e) {
-      throw Exception('Erro: $e');
+      throw Exception('Erro ao carregar campanhas: $e');
     }
   }
 
@@ -54,18 +56,21 @@ class _SelectDrawComponentState extends State<SelectDrawComponent> {
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<CampaignModel>(
+              value: selectedCampaign,
               padding: EdgeInsets.symmetric(horizontal: 6),
               isExpanded: true,
-              hint: Text('Guilherme'),
+              hint: Text('Selecione'),
               items: campaigns.map((campaign) {
                 return DropdownMenuItem<CampaignModel>(
                   value: campaign,
                   child: Text(campaign.description),
                 );
               }).toList(),
+              // quando é clicado em algum item do select, o onChnaged detecta qual foi clicado e coloca dentro do argumento que eu nomeei como newValue, daí consigo colcoar esse valor na variável de estado selectedCampaign
               onChanged: (CampaignModel? newValue) {
                 setState(() {
-                  
+                  selectedCampaign = newValue;
+
                 });
               },
             ),

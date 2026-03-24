@@ -69,46 +69,46 @@ class MyNumbersPage extends StatelessWidget {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: MyNumbersCardComponent(
-                name: 'Dani Dani',
-                phone: '(11) 11111-1111',
-                date: '16/01/2026 - 11:12h',
-                value: '0.07',
-                status: 'Confirmado',
-                totalQuantity: '8',
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: MyNumbersCardComponent(
-                name: 'Dani Dani',
-                phone: '(11) 11111-1111',
-                date: '16/01/2026 - 11:12h',
-                value: '0.07',
-                status: 'Confirmado',
-                totalQuantity: '8',
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: MyNumbersCardComponent(
-                name: 'Dani Dani',
-                phone: '(11) 11111-1111',
-                date: '16/01/2026 - 11:12h',
-                value: '0.07',
-                status: 'Confirmado',
-                totalQuantity: '8',
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: MyNumbersCardComponent(
-                name: 'Dani Dani',
-                phone: '(11) 11111-1111',
-                date: '16/01/2026 - 11:12h',
-                value: '0.07',
-                status: 'Confirmado',
-                totalQuantity: '8',
-              ),
-            ),
+            // SliverToBoxAdapter(
+            //   child: MyNumbersCardComponent(
+            //     name: 'Dani Dani',
+            //     phone: '(11) 11111-1111',
+            //     date: '16/01/2026 - 11:12h',
+            //     value: '0.07',
+            //     status: 'Confirmado',
+            //     totalQuantity: '8',
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: MyNumbersCardComponent(
+            //     name: 'Dani Dani',
+            //     phone: '(11) 11111-1111',
+            //     date: '16/01/2026 - 11:12h',
+            //     value: '0.07',
+            //     status: 'Confirmado',
+            //     totalQuantity: '8',
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: MyNumbersCardComponent(
+            //     name: 'Dani Dani',
+            //     phone: '(11) 11111-1111',
+            //     date: '16/01/2026 - 11:12h',
+            //     value: '0.07',
+            //     status: 'Confirmado',
+            //     totalQuantity: '8',
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: MyNumbersCardComponent(
+            //     name: 'Dani Dani',
+            //     phone: '(11) 11111-1111',
+            //     date: '16/01/2026 - 11:12h',
+            //     value: '0.07',
+            //     status: 'Confirmado',
+            //     totalQuantity: '8',
+            //   ),
+            // ),
           ],
         ),
       ),

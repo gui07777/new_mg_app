@@ -54,6 +54,13 @@ class CampaignModel {
     this.salesCount,
   });
 
+  static double _toDouble(dynamic value) {
+    if (value == null) return 0.0;
+    if (value is num) return value.toDouble();
+    if (value is String) return double.tryParse(value) ?? 0.0;
+    return 0.0;
+  }
+
   static CampaignStatusEnum _parseCampaignStatus(String value) {
     return CampaignStatusEnum.values.firstWhere((e) => e.value == value);
   }
@@ -63,7 +70,6 @@ class CampaignModel {
   }
 
   factory CampaignModel.fromJson(Map<String, dynamic> json) {
-    print(json);
 
     return CampaignModel(
       title: json['title'],
@@ -78,7 +84,7 @@ class CampaignModel {
       totalTickets: json['totalTickets'] ?? 0,
       minBuyTickets: json['minBuyTickets'] ?? 0,
       maxBuyTickets: json['maxBuyTickets'] ?? 0,
-      ticketValue: json['ticketvalue'] ?? 0,
+      ticketValue: _toDouble(json['ticketValue']),
       showDrawDate: json['showDrawDate'],
       showAdicionalInfo: json['showAdicionalInfo'],
       numbersQuantityButton: List<int>.from(json['numbersQuantityButton']),
@@ -90,7 +96,7 @@ class CampaignModel {
       checkAvailableNumbers: json['checkAvailableNumbers'],
       generalConditions: json['generalConditions'],
       regulation: json['regulation'],
-      availabilityLabel: json['availabilityLabel'],
+      availabilityLabel: json['availabilityLabel'] ?? 'teste',
       salesCount: json['salesCount'],
     );
   }
@@ -111,7 +117,7 @@ class CampaignPrizesModel {
     return CampaignPrizesModel(
       name: json['name'],
       numberDraw: json['numberDraw'],
-      value: (json['value'] ?? 0).toDouble(),
+      value: CampaignModel._toDouble(json['value']),
     );
   }
 }
