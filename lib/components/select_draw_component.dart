@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:new_mg_app/config/dio_client.dart';
 import 'package:new_mg_app/models/campaign_model.dart';
+import 'package:new_mg_app/providers/campaign_provider.dart';
 import 'package:new_mg_app/services/campaign_service.dart';
 
-class SelectDrawComponent extends StatefulWidget {
+class SelectDrawComponent extends ConsumerStatefulWidget {
   const SelectDrawComponent({super.key});
 
   @override
-  State<SelectDrawComponent> createState() => _SelectDrawComponentState();
+  ConsumerState<SelectDrawComponent> createState() => _SelectDrawComponentState();
 }
 
-class _SelectDrawComponentState extends State<SelectDrawComponent> {
+class _SelectDrawComponentState extends ConsumerState<SelectDrawComponent> {
   List<CampaignModel> campaigns = [];
   CampaignModel? selectedCampaign;
 
@@ -66,12 +68,13 @@ class _SelectDrawComponentState extends State<SelectDrawComponent> {
                   child: Text(campaign.description),
                 );
               }).toList(),
-              // quando é clicado em algum item do select, o onChnaged detecta qual foi clicado e coloca dentro do argumento que eu nomeei como newValue, daí consigo colcoar esse valor na variável de estado selectedCampaign
+              // quando é clicado em algum item do select, o onChanged detecta qual foi clicado e coloca dentro do argumento que eu nomeei como newValue, daí consigo colcoar esse valor na variável de estado selectedCampaign
               onChanged: (CampaignModel? newValue) {
                 setState(() {
                   selectedCampaign = newValue;
-
                 });
+
+                ref.read(selectedCampaignProvider.notifier).state = newValue;
               },
             ),
           ),

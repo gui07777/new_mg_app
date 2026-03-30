@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_mg_app/components/custom_top_bar_component.dart';
-import 'package:new_mg_app/components/my_number_card_component.dart';
 import 'package:new_mg_app/components/search_purchases_modal_component.dart';
 import 'package:new_mg_app/constants/enums.dart';
 

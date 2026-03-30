@@ -5,6 +5,7 @@ enum WhoCall {
   campaignAppBarComponent,
   registerModalComponent,
   loginModalComponent,
+  selectDrawComponent,
 
   // pages
   myNumbersPage,

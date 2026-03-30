@@ -1,9 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_mg_app/components/select_draw_component.dart';
+import 'package:new_mg_app/config/dio_client.dart';
 import 'package:new_mg_app/constants/enums.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:new_mg_app/models/campaign_model.dart';
+import 'package:new_mg_app/providers/campaign_provider.dart';
+import 'package:new_mg_app/services/campaign_service.dart';
+import 'package:new_mg_app/services/sale_service.dart';
 
 class SearchPurchasesModalComponent extends ConsumerStatefulWidget {
   final WhoCall origin;
@@ -26,11 +33,16 @@ class SearchPurchasesModalComponent extends ConsumerStatefulWidget {
 
 class _SearchPurchasesModalComponentState
     extends ConsumerState<SearchPurchasesModalComponent> {
+  final saleService = SaleService(DioClient());
+  final campaignService = CampaignService(DioClient());
   final TextEditingController _phoneController = TextEditingController();
   bool phoneBrl = true;
+  List<CampaignModel?> allCampaings = [];
+  // final CampaginModel? selectedCampaign;
 
   @override
   Widget build(BuildContext context) {
+    final selectedCampaign = ref.watch(selectedCampaignProvider);
     return Dialog(
       backgroundColor: Colors.white,
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -136,7 +148,16 @@ class _SearchPurchasesModalComponentState
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    // print('campanha atual: ${selectedCampaign?.description}');
+                    // final response = await saleService.listByClientAndCampaign(selectedCampaign);
+
+                    // print('resposta: $response');
+
+                    final list = await campaignService.list();
+
+                  
+                  },
                   child: Text(
                     'Buscar compras',
                     style: TextStyle(
