@@ -2,6 +2,7 @@ import 'package:new_mg_app/constants/campaign_modality_enum.dart';
 import 'package:new_mg_app/constants/campaign_status_enum.dart';
 
 class CampaignModel {
+  final String id;
   final String title;
   final String description;
   final CampaignStatusEnum status;
@@ -28,6 +29,7 @@ class CampaignModel {
   final int? salesCount;
 
   CampaignModel({
+    required this.id,
     required this.title,
     required this.description,
     required this.status,
@@ -72,6 +74,7 @@ class CampaignModel {
   factory CampaignModel.fromJson(Map<String, dynamic> json) {
 
     return CampaignModel(
+      id: json['_id'],
       title: json['title'],
       description: json['description'],
       status: _parseCampaignStatus(json['status']),

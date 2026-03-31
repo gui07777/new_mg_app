@@ -8,10 +8,10 @@ class SaleService {
 
   String get apiUrl => '${_client.client.options.baseUrl}/sale';
 
-  Future<CampaignModel?> listByClientAndCampaign(CampaignModel? campaign) async {
+  Future<dynamic> listByClientAndCampaign(String campaignId) async {
     try {
       final response = await _client.get(
-        '$apiUrl/list-by-client-and-campaign/$campaign',
+        '$apiUrl/list-by-client-and-campaign/$campaignId',
       );
 
       return response;

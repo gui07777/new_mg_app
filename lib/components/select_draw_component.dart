@@ -70,10 +70,6 @@ class _SelectDrawComponentState extends ConsumerState<SelectDrawComponent> {
               }).toList(),
               // quando é clicado em algum item do select, o onChanged detecta qual foi clicado e coloca dentro do argumento que eu nomeei como newValue, daí consigo colcoar esse valor na variável de estado selectedCampaign
               onChanged: (CampaignModel? newValue) {
-                setState(() {
-                  selectedCampaign = newValue;
-                });
-
                 ref.read(selectedCampaignProvider.notifier).state = newValue;
               },
             ),

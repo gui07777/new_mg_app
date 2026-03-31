@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -38,11 +36,10 @@ class _SearchPurchasesModalComponentState
   final TextEditingController _phoneController = TextEditingController();
   bool phoneBrl = true;
   List<CampaignModel?> allCampaings = [];
-  // final CampaginModel? selectedCampaign;
+ 
 
   @override
   Widget build(BuildContext context) {
-    final selectedCampaign = ref.watch(selectedCampaignProvider);
     return Dialog(
       backgroundColor: Colors.white,
       insetPadding: const EdgeInsets.symmetric(horizontal: 10),
@@ -149,14 +146,15 @@ class _SearchPurchasesModalComponentState
                     ),
                   ),
                   onPressed: () async {
-                    // print('campanha atual: ${selectedCampaign?.description}');
-                    // final response = await saleService.listByClientAndCampaign(selectedCampaign);
+                    final selectedCampaign = ref.watch(
+                      selectedCampaignProvider,
+                    );
+                    if (selectedCampaign == null) return;
 
-                    // print('resposta: $response');
+                    final campaignId = selectedCampaign.id;
 
-                    final list = await campaignService.list();
+                    final response = await saleService.listByClientAndCampaign(campaignId);
 
-                  
                   },
                   child: Text(
                     'Buscar compras',
