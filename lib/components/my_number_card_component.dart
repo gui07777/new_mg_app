@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyNumbersCardComponent extends StatefulWidget {
   final String name, phone, date, value, status, totalQuantity;
+  final List<int> tickets;
 
   const MyNumbersCardComponent({
     super.key,
@@ -11,6 +12,7 @@ class MyNumbersCardComponent extends StatefulWidget {
     required this.value,
     required this.status,
     required this.totalQuantity,
+    required this.tickets,
   });
 
   @override
@@ -87,16 +89,9 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
                 Wrap(
                   spacing: 10,
                   runSpacing: 10,
-                  children: [
-                    _buildBlueBoxTicket('6934320'),
-                    _buildBlueBoxTicket('0989590'),
-                    _buildBlueBoxTicket('8117870'),
-                    _buildBlueBoxTicket('0048555'),
-                    _buildBlueBoxTicket('6934320'),
-                    _buildBlueBoxTicket('0989590'),
-                    _buildBlueBoxTicket('8117870'),
-                    _buildBlueBoxTicket('0048555'),
-                  ],
+                  children: widget.tickets.map((ticket) {
+                    return _buildBlueBoxTicket(ticket.toString());
+                  }).toList(),
                 ),
               ],
             ],
@@ -129,7 +124,7 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
     );
   }
 
-  Widget _buildBlueBoxTicket(String number) {
+  Widget _buildBlueBoxTicket(String tickets) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
@@ -137,7 +132,7 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
-        number,
+        tickets,
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

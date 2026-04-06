@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:new_mg_app/components/select_draw_component.dart';
 import 'package:new_mg_app/config/dio_client.dart';
@@ -9,6 +8,7 @@ import 'package:new_mg_app/models/campaign_model.dart';
 import 'package:new_mg_app/providers/campaign_provider.dart';
 import 'package:new_mg_app/services/campaign_service.dart';
 import 'package:new_mg_app/services/sale_service.dart';
+// import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class SearchPurchasesModalComponent extends ConsumerStatefulWidget {
   final WhoCall origin;
@@ -36,7 +36,29 @@ class _SearchPurchasesModalComponentState
   final TextEditingController _phoneController = TextEditingController();
   bool phoneBrl = true;
   List<CampaignModel?> allCampaings = [];
- 
+
+  bool get _isPhoneValid {
+    final digits = _phoneController.text.replaceAll(RegExp(r'\D'), '');
+    return digits.length >= 10;
+  }
+
+  Future<void> _handleSearch() async {
+    final selectedCampaign = ref.read(selectedCampaignProvider);
+    if (selectedCampaign == null) return;
+
+    try {
+      final response = await saleService.listByClientAndCampaign(
+        selectedCampaign.id,
+      );
+
+      if (!context.mounted) return;
+
+      Navigator.pop(context);
+      Navigator.pushNamed(context, '/my-numbers', arguments: response ?? []);
+    } catch (e) {
+      throw Exception('erro ao buscar campanhas $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,85 +76,89 @@ class _SearchPurchasesModalComponentState
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Buscar compras',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF212b36),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: Icon(Icons.close),
-                ),
-              ],
-            ),
+            _buildHeader(),
             Divider(),
             SizedBox(height: 10),
             SelectDrawComponent(),
-            Text(
-              'Telefone',
-              style: TextStyle(
-                color: Color(0xFF454f5b),
-                fontWeight: FontWeight.w500,
-                fontSize: 13,
-                height: 2.2,
-              ),
+            SizedBox(height: 16),
+            _buildPhoneField(),
+            SizedBox(height: 20),
+            _buildFooterActions(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Buscar compras',
+          style: TextStyle(
+            fontSize: 20,
+            color: Color(0xFF212b36),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.close),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhoneField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Telefone',
+          style: TextStyle(
+            color: Color(0xFF454f5b),
+            fontWeight: FontWeight.w500,
+            fontSize: 13,
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: _phoneController,
+          keyboardType: TextInputType.phone,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          decoration: InputDecoration(
+            prefixIcon: const Icon(FontAwesomeIcons.whatsapp, size: 18),
+            hintText: '(__) _____-____',
+            isDense: true,
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 6,
+              horizontal: 12,
             ),
-            TextFormField(
-              controller: _phoneController,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                prefixIconConstraints: const BoxConstraints(
-                  minWidth: 40,
-                  maxHeight: 25,
-                ),
-                prefixIcon: const Icon(FontAwesomeIcons.whatsapp, size: 18),
-                hintText: '(__) _____-____',
-                hintStyle: const TextStyle(fontSize: 16),
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 6,
-                  horizontal: 12,
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(
-                    color: Colors.grey.shade300,
-                    width: 1.5,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide(color: Colors.blueAccent, width: 3.0),
-                ),
-              ),
-              validator: (value) {
-                String? cleaned = value?.replaceAll(RegExp(r'\D'), '');
-
-                RegExp regex = RegExp(r'^\d{10,11}$');
-
-                if (cleaned == null || cleaned.isEmpty) {
-                  return 'O telefone é obrigatório';
-                } else if (!regex.hasMatch(cleaned)) {
-                  return 'Número de telefone inválido';
-                }
-                return null;
-              },
-
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(11),
-              ],
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Colors.grey.shade300),
             ),
-            SizedBox(height: 10),
+            prefixIconConstraints: const BoxConstraints(
+              minWidth: 40,
+              maxHeight: 25,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFooterActions() {
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: _phoneController,
+      builder: (context, value, child) {
+        final bool isValid = _isPhoneValid;
+        return Column(
+          children: [
             Align(
               alignment: Alignment.centerRight,
               child: SizedBox(
@@ -140,22 +166,14 @@ class _SearchPurchasesModalComponentState
                 height: 32,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: isValid
+                        ? Colors.blueAccent
+                        : Colors.grey.shade400,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                  onPressed: () async {
-                    final selectedCampaign = ref.watch(
-                      selectedCampaignProvider,
-                    );
-                    if (selectedCampaign == null) return;
-
-                    final campaignId = selectedCampaign.id;
-
-                    final response = await saleService.listByClientAndCampaign(campaignId);
-
-                  },
+                  onPressed: isValid ? _handleSearch : null,
                   child: Text(
                     'Buscar compras',
                     style: TextStyle(
@@ -167,35 +185,37 @@ class _SearchPurchasesModalComponentState
                 ),
               ),
             ),
-            if (widget.origin == WhoCall.myNumbersPage)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: Opacity(
-                  opacity: 0.9,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFfff3cd),
-                      border: Border.all(color: Color(0xFFFFE69C), width: 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    padding: const EdgeInsets.all(14),
-                    child: Row(
-                      children: [
-                        Icon(Icons.warning_amber_rounded, size: 18),
-                        SizedBox(width: 5),
-                        Expanded(
-                          child: Text(
-                            'Preencha os campos para localizar suas compras.',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+            if (!isValid) _buildWarningCard(),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildWarningCard() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Opacity(
+        opacity: 0.9,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Color(0xFFfff3cd),
+            border: Border.all(color: Color(0xFFFFE69C), width: 1),
+            borderRadius: BorderRadius.circular(5),
+          ),
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            children: [
+              Icon(Icons.warning_amber_rounded, size: 18),
+              SizedBox(width: 5),
+              Expanded(
+                child: Text(
+                  'Preencha os campos para localizar suas compras.',
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
-            SizedBox(height: 14),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:new_mg_app/config/dio_client.dart';
-import 'package:new_mg_app/models/campaign_model.dart';
 
 class SaleService {
   final DioClient _client;
@@ -14,7 +13,7 @@ class SaleService {
         '$apiUrl/list-by-client-and-campaign/$campaignId',
       );
 
-      return response;
+      return response['data'];
     } catch (e) {
       throw Exception('Erro ao buscar dados: $e');
     }
