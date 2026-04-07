@@ -1,6 +1,6 @@
 Versão de aplicativo mobile da aplicação web existente: new-mg-rifa
 
-Criado em flutter por conter um amplo ecossistema para desenvolver interfaces de maneira rápida e eficiente.
+Criado em flutter por ser uma linguagem que contém um amplo ecossistema para desenvolver interfaces de maneira rápida e eficiente.
 
 Riverpod - arquitetura de gerenciamento de estado escolhida.
 

@@ -14,7 +14,6 @@ class SelectDrawComponent extends ConsumerStatefulWidget {
 
 class _SelectDrawComponentState extends ConsumerState<SelectDrawComponent> {
   List<CampaignModel> campaigns = [];
-  CampaignModel? selectedCampaign;
 
   @override
   void initState() {
@@ -37,6 +36,7 @@ class _SelectDrawComponentState extends ConsumerState<SelectDrawComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final selectedCampaign = ref.watch(selectedCampaignProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,14 +61,12 @@ class _SelectDrawComponentState extends ConsumerState<SelectDrawComponent> {
               value: selectedCampaign,
               padding: EdgeInsets.symmetric(horizontal: 6),
               isExpanded: true,
-              hint: Text('Selecione'),
               items: campaigns.map((campaign) {
                 return DropdownMenuItem<CampaignModel>(
                   value: campaign,
                   child: Text(campaign.description),
                 );
               }).toList(),
-              // quando é clicado em algum item do select, o onChanged detecta qual foi clicado e coloca dentro do argumento que eu nomeei como newValue, daí consigo colcoar esse valor na variável de estado selectedCampaign
               onChanged: (CampaignModel? newValue) {
                 ref.read(selectedCampaignProvider.notifier).state = newValue;
               },

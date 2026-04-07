@@ -1,0 +1,15 @@
+Riverpod
+
+biblioteca do flutter escolhida como arquitetura de gerenciamento de estado. Com o Riverpod é possível criar provedores (providers) que setam alguma informação como estado atual
+para toda a aplicação. Então por exemplo, se eu quiser que todas as minhas páginas, componentes, serviços (o aplicativo inteiro) saiba qual o usuário autenticado atualmente de maneira
+simples e possibilitar o acesso a essa informação, podemos utilizar o riverpod para criar um provider que fica escutando mudanças nesse estado, e guarda o usuário novo quando mudar.
+Ganho em organização do código e do projeto pois separamos os providers em arquivos separados conforme a sua responsabilidade, sendo assim, quando preciso setar um novo estado para o provider
+necessário, acesso o provider e chamo o método que muda o estado de maneira simples.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+MaskInputFormatter
+
+biblioteca para adicionar máscaras dinâmicas aos inputs melhorando a experiência do usuário, a interface, além de gerenciar a quantidade de dígitos de maneira automática sem necessidade de adicionar
+propriedades manuais de máscara e criar métodos manuais para validação de tamanho, reduzindo o gasto na performance do app.

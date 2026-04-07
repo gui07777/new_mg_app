@@ -85,13 +85,19 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
               ),
 
               if (_isExpanded) ...[
-                const SizedBox(height: 10),
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: widget.tickets.map((ticket) {
-                    return _buildBlueBoxTicket(ticket.toString());
-                  }).toList(),
+                GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: widget.tickets.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    childAspectRatio: 4.5
+                  ),
+                  itemBuilder: (context, index) {
+                    return _buildBlueBoxTicket(widget.tickets[index].toString());
+                  },
                 ),
               ],
             ],
@@ -126,12 +132,16 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
 
   Widget _buildBlueBoxTicket(String tickets) {
     return Container(
+      width:
+          100, // para o retangulo azul ter uma largura fixa independente do tamanho do numero (antes com a largura indefinida, alguns ficavam menores e outros maiores)
+          height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xFF0D3B7A),
         borderRadius: BorderRadius.circular(4),
       ),
       child: Text(
+        textAlign: TextAlign.center,
         tickets,
         style: const TextStyle(
           color: Colors.white,

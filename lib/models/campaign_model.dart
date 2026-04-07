@@ -28,6 +28,15 @@ class CampaignModel {
   final String availabilityLabel;
   final int? salesCount;
 
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is CampaignModel && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+
   CampaignModel({
     required this.id,
     required this.title,
@@ -72,7 +81,6 @@ class CampaignModel {
   }
 
   factory CampaignModel.fromJson(Map<String, dynamic> json) {
-
     return CampaignModel(
       id: json['_id'],
       title: json['title'],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:new_mg_app/components/select_draw_component.dart';
 import 'package:new_mg_app/config/dio_client.dart';
 import 'package:new_mg_app/constants/enums.dart';
@@ -41,6 +42,12 @@ class _SearchPurchasesModalComponentState
     final digits = _phoneController.text.replaceAll(RegExp(r'\D'), '');
     return digits.length >= 10;
   }
+
+  final maskFormatter = MaskTextInputFormatter(
+    mask: '(__) _____-____',
+    filter: {'_': RegExp(r'[0-9]')},
+    type: MaskAutoCompletionType.lazy,
+  );
 
   Future<void> _handleSearch() async {
     final selectedCampaign = ref.read(selectedCampaignProvider);
@@ -84,6 +91,7 @@ class _SearchPurchasesModalComponentState
             _buildPhoneField(),
             SizedBox(height: 20),
             _buildFooterActions(),
+            SizedBox(height: 20),
           ],
         ),
       ),
@@ -147,6 +155,7 @@ class _SearchPurchasesModalComponentState
               maxHeight: 25,
             ),
           ),
+          inputFormatters: [maskFormatter],
         ),
       ],
     );
@@ -185,7 +194,10 @@ class _SearchPurchasesModalComponentState
                 ),
               ),
             ),
-            if (!isValid) _buildWarningCard(),
+            if (!isValid) Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: _buildWarningCard(),
+            ),
           ],
         );
       },
@@ -193,29 +205,26 @@ class _SearchPurchasesModalComponentState
   }
 
   Widget _buildWarningCard() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Opacity(
-        opacity: 0.9,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFfff3cd),
-            border: Border.all(color: Color(0xFFFFE69C), width: 1),
-            borderRadius: BorderRadius.circular(5),
-          ),
-          padding: const EdgeInsets.all(14),
-          child: Row(
-            children: [
-              Icon(Icons.warning_amber_rounded, size: 18),
-              SizedBox(width: 5),
-              Expanded(
-                child: Text(
-                  'Preencha os campos para localizar suas compras.',
-                  style: TextStyle(fontSize: 16),
-                ),
+    return Opacity(
+      opacity: 0.9,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFfff3cd),
+          border: Border.all(color: Color(0xFFFFE69C), width: 1),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        padding: const EdgeInsets.all(14),
+        child: Row(
+          children: [
+            Icon(Icons.warning_amber_rounded, size: 18),
+            SizedBox(width: 5),
+            Expanded(
+              child: Text(
+                'Preencha os campos para localizar suas compras.',
+                style: TextStyle(fontSize: 16),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
