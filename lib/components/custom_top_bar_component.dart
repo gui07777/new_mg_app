@@ -6,7 +6,8 @@ import 'package:new_mg_app/constants/enums.dart';
 import 'package:new_mg_app/providers/auth_provider.dart';
 
 class CustomTopBarComponent extends ConsumerWidget {
-  const CustomTopBarComponent({super.key});
+  final String currentPath;
+  const CustomTopBarComponent({super.key, this.currentPath = '/'});
 
   void _openMenu(BuildContext context) {
     showGeneralDialog(
@@ -89,7 +90,11 @@ class CustomTopBarComponent extends ConsumerWidget {
                         size: 15,
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(context, '/'),
+                        onPressed: () {
+                          if (currentPath != '/campaigns') {
+                            Navigator.pushNamed(context, '/campaigns');
+                          }
+                        },
                         style: TextButton.styleFrom(padding: EdgeInsets.all(2)),
                         child: const Text(
                           'Campanhas',
@@ -105,9 +110,14 @@ class CustomTopBarComponent extends ConsumerWidget {
                   TextButton(
                     onPressed: () {
                       if (isLogged) {
-                        Navigator.pushNamed(context, '/my-numbers');
+                        if (currentPath != '/my-numbers') {
+                          Navigator.pushNamed(context, '/my-numbers');
+                        }
                       } else {
-                        LoginModalComponent.show(context, WhoCall.customTopBarComponent);
+                        LoginModalComponent.show(
+                          context,
+                          WhoCall.customTopBarComponent,
+                        );
                       }
                     },
                     child: const Text(

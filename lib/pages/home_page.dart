@@ -68,42 +68,7 @@ class _HomeState extends State<HomePage> {
               child: Column(
                 children: [
                   CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11/2025 às 17:36",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11/2025 às 17:36",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11/2025 às 17:36",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11/2025 às 17:36",
-                    valor: "0,01",
+
                   ),
                 ],
               ),

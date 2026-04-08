@@ -6,8 +6,8 @@ class CampaignModel {
   final String title;
   final String description;
   final CampaignStatusEnum status;
-  final String imgDesktop;
-  final String imgMobile;
+  final String? imgDesktop;
+  final String? imgMobile;
   final String? susep;
   final CampaignModalityEnum modality;
   final DateTime drawDate;
@@ -86,12 +86,12 @@ class CampaignModel {
       title: json['title'],
       description: json['description'],
       status: _parseCampaignStatus(json['status']),
-      imgDesktop: json['imgDesktop'],
-      imgMobile: json['imgMobile'],
+      imgDesktop: json['imgDesktop'] == '' ? null : json['imgDesktop'],
+      imgMobile: json['imgMobile'] == '' ? null : json['imgMobile'],
       susep: json['susep'],
       modality: _parseModalityStatus(json['modality']),
-      drawDate: DateTime.parse(json['drawDate']),
-      deadlineDate: DateTime.parse(json['deadlineDate']),
+      drawDate: DateTime.parse(json['drawDate']).toLocal(),
+      deadlineDate: DateTime.parse(json['deadlineDate']).toLocal(),
       totalTickets: json['totalTickets'] ?? 0,
       minBuyTickets: json['minBuyTickets'] ?? 0,
       maxBuyTickets: json['maxBuyTickets'] ?? 0,

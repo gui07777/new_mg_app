@@ -43,63 +43,8 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
               _buildInfoRow('Valor:', 'R\$${widget.value}'),
               _buildInfoRow('Status:', widget.status),
               _buildInfoRow('Quantidade total:', widget.totalQuantity),
-              Row(
-                children: [
-                  Text(
-                    'Ações:',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Color(0xFF212b36),
-                    ),
-                  ),
-                  TextButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        _isExpanded = !_isExpanded;
-                      });
-                    },
-                    icon: Icon(Icons.print, color: Color(0xFF212b36)),
-                    label: Text(
-                      'Ver títulos',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF212b36),
-                      ),
-                    ),
-                  ),
-                  TextButton.icon(
-                    onPressed: () {},
-                    icon: Icon(Icons.print, color: Color(0xFF212b36)),
-                    label: Text(
-                      'Ver jogos',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF212b36),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              if (_isExpanded) ...[
-                GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: widget.tickets.length,
-                  physics: NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    childAspectRatio: 4.5
-                  ),
-                  itemBuilder: (context, index) {
-                    return _buildBlueBoxTicket(widget.tickets[index].toString());
-                  },
-                ),
-              ],
+              _buildActionButtons(),
+              if (_isExpanded) ...[_buildGridCondintional()],
             ],
           ),
         ),
@@ -130,11 +75,56 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
     );
   }
 
+  Widget _buildActionButtons() {
+    return Row(
+      children: [
+        SizedBox(
+          width: 95,
+          child: Text(
+            'Ações:',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF212b36),
+            ),
+          ),
+        ),
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              _isExpanded = !_isExpanded;
+            });
+          },
+          icon: Icon(Icons.print, color: Color(0xFF212b36)),
+          label: Text(
+            'Ver títulos',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF212b36),
+            ),
+          ),
+        ),
+        TextButton.icon(
+          onPressed: () {},
+          icon: Icon(Icons.print, color: Color(0xFF212b36)),
+          label: Text(
+            'Ver jogos',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF212b36),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildBlueBoxTicket(String tickets) {
     return Container(
-      width:
-          100, // para o retangulo azul ter uma largura fixa independente do tamanho do numero (antes com a largura indefinida, alguns ficavam menores e outros maiores)
-          height: 40,
+      width: 100,
+      height: 40,
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xFF0D3B7A),
@@ -148,6 +138,23 @@ class _MyNumbersCardState extends State<MyNumbersCardComponent> {
           fontWeight: FontWeight.bold,
         ),
       ),
+    );
+  }
+
+  Widget _buildGridCondintional() {
+    return GridView.builder(
+      shrinkWrap: true,
+      itemCount: widget.tickets.length,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 4.5,
+      ),
+      itemBuilder: (context, index) {
+        return _buildBlueBoxTicket(widget.tickets[index].toString());
+      },
     );
   }
 }

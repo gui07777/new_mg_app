@@ -18,7 +18,7 @@ class _CampaignsState extends State<CampaignsPage> {
         top: false,
         child: CustomScrollView(
           slivers: [
-            CustomTopBarComponent(),
+            CustomTopBarComponent(currentPath: '/campaigns'),
             SliverToBoxAdapter(
               child: Container(height: 1, color: Colors.grey[800]),
             ),
@@ -62,81 +62,7 @@ class _CampaignsState extends State<CampaignsPage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-                    titulo: "A HORA DA SORTE 3",
-                    data: "15/11",
-                    valor: "0,01",
-                  ),
-                ],
-              ),
+              child: Column(children: [CampaignCardsComponent()]),
             ),
           ],
         ),

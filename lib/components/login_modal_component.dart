@@ -36,7 +36,6 @@ class LoginModalComponent extends ConsumerStatefulWidget {
 
 class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
   final TextEditingController _phoneController = TextEditingController();
-  bool _isLoading = false;
   bool phoneBrl = true;
 
   String get _displayMessage {
@@ -110,8 +109,6 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
           context,
         ).showSnackBar(SnackBar(content: Text('Erro ao autenticar: $e')));
       }
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
     }
   }
 

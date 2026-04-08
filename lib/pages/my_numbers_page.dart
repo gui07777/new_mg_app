@@ -23,7 +23,7 @@ class MyNumbersPage extends StatelessWidget {
         top: false,
         child: CustomScrollView(
           slivers: [
-            CustomTopBarComponent(),
+            CustomTopBarComponent(currentPath: '/my-numbers'),
             _buildHeader(context),
             purchases.isEmpty ? _buildEmptyState() : _buildList(purchases),
           ],
