@@ -4,23 +4,19 @@ import 'package:new_mg_app/components/checkout_modal_component.dart';
 import 'package:new_mg_app/components/description_regulation_component.dart';
 import 'package:new_mg_app/components/navigation_modal_component.dart';
 import 'package:new_mg_app/components/campaign_app_bar_component.dart';
+import 'package:new_mg_app/models/campaign_model.dart';
 
 class CampaignDetailsPage extends StatefulWidget {
-  final String imageUrl;
-  final String title;
+  final CampaignModel campaign;
 
-  const CampaignDetailsPage({
-    super.key,
-    required this.imageUrl,
-    required this.title,
-  });
+  const CampaignDetailsPage({super.key, required this.campaign});
 
   @override
   State<CampaignDetailsPage> createState() => _CampaignDetailsPageState();
 }
 
 class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
-  int _quantity = 1;
+  int _quantity = 0;
 
   void _openCheckoutModal(BuildContext context) {
     showGeneralDialog(
@@ -52,9 +48,9 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
           ),
           slivers: [
             CampaignAppBarComponent(
-              imageUrl: widget.imageUrl,
+              imageUrl: widget.campaign.imgMobile,
               onMenuPressed: () => _openMenu(context),
-              title: widget.title,
+              title: widget.campaign.description,
             ),
             SliverToBoxAdapter(
               child: Container(
@@ -79,7 +75,7 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
-                            '01/08/2026',
+                            '${widget.campaign.drawDate.day.toString().padLeft(2, '0')}/${widget.campaign.drawDate.month.toString().padLeft(2, '0')}/${widget.campaign.drawDate.year}',
                             style: TextStyle(
                               fontSize: 10,
                               color: Colors.black,
@@ -102,7 +98,7 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
-                            'R\$ 0,01',
+                            'R\$ ${widget.campaign.ticketValue}',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -131,13 +127,17 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
                     Wrap(
                       spacing: 6,
                       runSpacing: 6,
-                      children: [
-                        _buildSelectButton(),
-                        _buildSelectButton(),
-                        _buildSelectButton(),
-                        _buildSelectButton(),
-                        _buildSelectButton(),
-                      ],
+                      children: (widget.campaign.numbersQuantityButton.isEmpty)
+                          ? [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: _buildSelectButton(1),
+                              ),
+                            ]
+                          : widget.campaign.numbersQuantityButton.map((value) {
+                              int displayValue = (value <= 0) ? 1 : value;
+                              return _buildSelectButton(displayValue);
+                            }).toList(),
                     ),
                     const SizedBox(height: 5),
                     Row(
@@ -405,11 +405,11 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
     );
   }
 
-  Widget _buildSelectButton() {
+  Widget _buildSelectButton(int value) {
     return InkWell(
       onTap: () {
         setState(() {
-          _quantity++;
+          _quantity = _quantity + value;
         });
       },
       child: Container(
@@ -419,9 +419,9 @@ class _CampaignDetailsPageState extends State<CampaignDetailsPage> {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          children: const [
+          children: [
             Text(
-              '+1',
+              '+${value}',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,

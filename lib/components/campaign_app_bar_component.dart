@@ -4,13 +4,13 @@ import 'package:new_mg_app/components/login_modal_component.dart';
 import 'package:new_mg_app/constants/enums.dart';
 
 class CampaignAppBarComponent extends StatelessWidget {
-  final String imageUrl;
+  final String? imageUrl;
   final VoidCallback onMenuPressed;
   final String title;
 
   const CampaignAppBarComponent({
     super.key,
-    required this.imageUrl,
+    this.imageUrl,
     required this.onMenuPressed,
     required this.title,
   });
@@ -62,7 +62,8 @@ class CampaignAppBarComponent extends StatelessWidget {
         background: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(imageUrl, fit: BoxFit.cover, cacheWidth: 300),
+            imageUrl == null || imageUrl!.isEmpty ? _buildNoImageContainer() : 
+            Image.network(imageUrl.toString(), fit: BoxFit.cover, cacheWidth: 300),
             const DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -147,6 +148,33 @@ class CampaignAppBarComponent extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+    Widget _buildNoImageContainer() {
+    return Container(
+      width: 85,
+      height: 95,
+      color: Colors.grey[200],
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.image_not_supported_outlined,
+            color: Colors.black38,
+            size: 24,
+          ),
+          SizedBox(height: 4),
+          Text(
+            'Sem foto',
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.black38,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
       ),
     );
   }
