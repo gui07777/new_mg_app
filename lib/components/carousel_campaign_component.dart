@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:new_mg_app/config/dio_client.dart';
+import 'package:new_mg_app/models/campaign_model.dart';
+import 'package:new_mg_app/services/campaign_service.dart';
 
 class CarouselCampaignComponent extends StatefulWidget {
   const CarouselCampaignComponent({super.key});
@@ -9,14 +12,26 @@ class CarouselCampaignComponent extends StatefulWidget {
 }
 
 class _CarouselCampaignState extends State<CarouselCampaignComponent> {
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-    'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-    'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-    'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-    'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80',
-  ];
+  List<CampaignModel> campaigns = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCampaigns();
+  }
+
+  Future<void> _loadCampaigns() async {
+    try {
+      final campaignService = CampaignService(DioClient());
+      final dynamic result = await campaignService.list();
+
+      setState(() {
+        campaigns = result;
+      });
+    } on Exception catch (e) {
+      throw Exception('Erro ao carregar campanhas: $e');
+    }
+  }
 
   final CarouselSliderController _controller = CarouselSliderController();
 
@@ -32,29 +47,69 @@ class _CarouselCampaignState extends State<CarouselCampaignComponent> {
               child: CarouselSlider(
                 carouselController: _controller,
                 options: CarouselOptions(
-                  height: 350,
+                  height: 300,
                   autoPlay: true,
                   viewportFraction: 1.0,
                   enlargeCenterPage: false,
                 ),
-                items: imgList.map((i) {
+                items: campaigns.map((i) {
                   return Builder(
                     builder: (BuildContext context) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 153, 153, 151),
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            i,
-                            fit: BoxFit.fill,
-                            height: 350,
-                            cacheWidth: 300
-                          ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Expanded(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                                child: i.imgMobile == null || i.imgMobile!.isEmpty
+                                    ? _buildNoImageContainer()
+                                    : Image.network(
+                                        i.imgMobile.toString(),
+                                        fit: BoxFit.cover,
+                                        // height: 350,
+                                        cacheWidth: 300,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                _buildNoImageContainer(),
+                                      ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    i.description,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF333333),
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    'Participe e concorra!',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -87,6 +142,33 @@ class _CarouselCampaignState extends State<CarouselCampaignComponent> {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _buildNoImageContainer() {
+    return Container(
+      width: 85,
+      height: 95,
+      color: Colors.grey[200],
+      child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.image_not_supported_outlined,
+            color: Colors.black38,
+            size: 24,
+          ),
+          SizedBox(height: 4),
+          Text(
+            'Sem foto',
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.black38,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

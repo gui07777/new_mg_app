@@ -142,7 +142,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
               _buildCampaignLabel(),
             _buildPhoneField(),
             _buildFooterActions(),
-            const SizedBox(height: 8),
+            const SizedBox(height: 3),
             _buildSubmitButton(),
             const SizedBox(height: 10),
           ],
@@ -253,6 +253,10 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
+        style: TextButton.styleFrom(
+          padding: EdgeInsets.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap
+        ),
         onPressed: () {
           Navigator.pop(context);
           RegisterModalComponent.show(context, WhoCall.loginModalComponent);
@@ -262,6 +266,7 @@ class _LoginModalComponentState extends ConsumerState<LoginModalComponent> {
           style: TextStyle(
             decoration: TextDecoration.underline,
             fontWeight: FontWeight.bold,
+            color: Color(0xFF454f5b)
           ),
         ),
       ),

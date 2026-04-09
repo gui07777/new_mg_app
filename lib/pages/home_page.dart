@@ -65,13 +65,7 @@ class _HomeState extends State<HomePage> {
               ),
             ),
             SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  CampaignCardsComponent(
-
-                  ),
-                ],
-              ),
+              child: Column(children: [CampaignCardsComponent()]),
             ),
             SliverToBoxAdapter(
               child: Column(
@@ -93,7 +87,6 @@ class _HomeState extends State<HomePage> {
                     ),
                   ),
                   Padding(padding: const EdgeInsets.symmetric(vertical: 5)),
-
                   FrequentlyQuestionsComponent(
                     title: "Como acesso minhas compras?",
                     subtitle:

@@ -37,6 +37,7 @@ class _CampaignCardsState extends State<CampaignCardsComponent> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      padding: EdgeInsets.all(5),
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: campaigns.length,
